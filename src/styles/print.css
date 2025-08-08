@@ -1,0 +1,92 @@
+/* Print Styles with @page support */
+
+@page {
+  size: A4;
+  margin: 15mm 20mm;
+}
+
+@page :first {
+  margin-top: 20mm;
+}
+
+@page :left {
+  margin-left: 25mm;
+  margin-right: 15mm;
+}
+
+@page :right {
+  margin-left: 15mm;
+  margin-right: 25mm;
+}
+
+/* Print-specific styles */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide elements that shouldn't print */
+  .print-hidden,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure elements print properly */
+  .print-visible {
+    display: block !important;
+  }
+
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
+  }
+
+  /* Table printing */
+  table {
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tbody {
+    display: table-row-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Document structure */
+  .document {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Signature area should stay together */
+  .signature {
+    page-break-inside: avoid;
+    margin-top: 2cm;
+  }
+}

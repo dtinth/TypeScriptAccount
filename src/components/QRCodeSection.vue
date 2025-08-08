@@ -1,0 +1,102 @@
+<template>
+  <section v-if="showQR" class="qr-section">
+    <h3 class="qr-section__title">ชำระเงินผ่าน PromptPay</h3>
+    <div class="qr-section__container">
+      <img v-if="qrCodeUrl" :src="qrCodeUrl" alt="PromptPay QR Code" class="qr-section__code" />
+      <div v-else class="qr-section__loading">กำลังสร้าง QR Code...</div>
+      <div class="qr-section__info">
+        <div class="qr-section__info-item">PromptPay ID: {{ promptPayId }}</div>
+        <div class="qr-section__info-item">จำนวนเงิน: {{ formatCurrency(amount) }}</div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import type { GristRecord } from '../types/document-schema'
+import { formatCurrency } from '../utils/currency'
+import { calculateSubtotal } from '../utils/document'
+import { generatePromptPayQR } from '../utils/promptpay'
+
+interface Props {
+  record: GristRecord
+}
+
+const props = defineProps<Props>()
+
+const qrCodeUrl = ref<string | null>(null)
+
+const promptPayId = computed(() => {
+  return props.record.Record.Payment_Method?.PromptPay
+})
+
+const showQR = computed(() => {
+  return !!promptPayId.value
+})
+
+const amount = computed(() => {
+  const subtotal = calculateSubtotal(props.record.Record.Items)
+  return subtotal + props.record.Record.Tax
+})
+
+onMounted(async () => {
+  if (showQR.value && promptPayId.value) {
+    try {
+      qrCodeUrl.value = await generatePromptPayQR(promptPayId.value, amount.value)
+    } catch (error) {
+      console.error('Failed to generate QR code:', error)
+    }
+  }
+})
+</script>
+
+<style>
+:root {
+  --qr-size: 2.5cm;
+}
+
+.qr-section {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.qr-section__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-primary);
+}
+
+.qr-section__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.qr-section__code {
+  width: var(--qr-size);
+  height: var(--qr-size);
+  border: 1px solid var(--border-light);
+}
+
+.qr-section__loading {
+  width: var(--qr-size);
+  height: var(--qr-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--border-default);
+  color: var(--text-muted);
+}
+
+.qr-section__info {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.qr-section__info-item {
+  margin-bottom: var(--spacing-xs);
+}
+</style>

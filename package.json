@@ -18,13 +18,20 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "vue": "^3.5.18"
+    "@fontsource/sarabun": "^5.2.6",
+    "baht": "^0.7.1",
+    "micromark": "^4.0.2",
+    "promptpay-qr": "^0.5.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.18",
+    "zod": "^4.0.15"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.16.5",
+    "@types/qrcode": "^1.5.5",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitest/eslint-plugin": "^1.3.4",
     "@vue/eslint-config-prettier": "^10.2.0",
