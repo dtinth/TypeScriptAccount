@@ -1,9 +1,17 @@
 <template>
   <div class="action-buttons action-buttons--print-hidden">
-    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint">
+    <button
+      type="button"
+      class="action-buttons__button action-buttons__button--primary"
+      @click="handlePrint"
+    >
       🖨️ พิมพ์เอกสาร
     </button>
-    <button type="button" class="action-buttons__button action-buttons__button--secondary" @click="handleCopyJson">
+    <button
+      type="button"
+      class="action-buttons__button action-buttons__button--secondary"
+      @click="handleCopyJson"
+    >
       📋 คัดลอก JSON
     </button>
   </div>
@@ -24,7 +32,8 @@ function handlePrint() {
 
 function handleCopyJson() {
   if (props.record) {
-    navigator.clipboard.writeText(JSON.stringify(props.record, null, 2))
+    navigator.clipboard
+      .writeText(JSON.stringify(props.record, null, 2))
       .then(() => {
         alert('JSON ถูกคัดลอกแล้ว')
       })

@@ -19,7 +19,10 @@ const isLoading = ref(true)
 
 onMounted(() => {
   // Check if grist is available
-  if (typeof window.grist !== 'undefined' && !new URLSearchParams(window.location.search).has('standalone')) {
+  if (
+    typeof window.grist !== 'undefined' &&
+    !new URLSearchParams(window.location.search).has('standalone')
+  ) {
     window.grist.ready()
     window.grist.onRecord(function (recordData: unknown) {
       try {
@@ -38,50 +41,50 @@ onMounted(() => {
   } else {
     // Standalone mode with sample data for testing
     const sampleData: GristRecord = {
-      "id": 5,
-      "Record": {
-        "Client": {
-          "Address": "123/45 หมู่ 6 ถ.ตัวอย่าง แขวงบ้านใหม่ อ.ปากเกร็ด จ.นนทบุรี 11120",
-          "Name": "บริษัท ลูกค้า จำกัด",
-          "Tax_ID": "9999999999999",
-          "id": 3
+      id: 5,
+      Record: {
+        Client: {
+          Address: '123/45 หมู่ 6 ถ.ตัวอย่าง แขวงบ้านใหม่ อ.ปากเกร็ด จ.นนทบุรี 11120',
+          Name: 'บริษัท ลูกค้า จำกัด',
+          Tax_ID: '9999999999999',
+          id: 3,
         },
-        "Date": "2025-08-09T00:00:00.000Z",
-        "Document_Type": ["Receipt"],
-        "Items": [
+        Date: '2025-08-09T00:00:00.000Z',
+        Document_Type: ['Receipt'],
+        Items: [
           {
-            "Description": "**ไอเทมทดสอบ** - รายการสำคัญ\n- คุณภาพสูง\n- รหัสสินค้า: `TEST001`",
-            "Document": {
-              "tableId": "Documents",
-              "rowId": 5
+            Description: '**ไอเทมทดสอบ** - รายการสำคัญ\n- คุณภาพสูง\n- รหัสสินค้า: `TEST001`',
+            Document: {
+              tableId: 'Documents',
+              rowId: 5,
             },
-            "Manual_Sort": 1,
-            "Quantity": 2,
-            "Total": 198,
-            "Unit_Price": 99,
-            "id": 5
-          }
+            Manual_Sort: 1,
+            Quantity: 2,
+            Total: 198,
+            Unit_Price: 99,
+            id: 5,
+          },
         ],
-        "Number": "TEST-001",
-        "Payment_Method": {
-          "Account_Holder": "นาย ทด สอบ",
-          "Account_Number": "012-1-23456-7",
-          "Bank": "ธนาคารกรุงศรี",
-          "Branch": "เอสพละนาด รัชดาภิเษก",
-          "Name": "TEST payment",
-          "PromptPay": "0123456789",
-          "id": 2
+        Number: 'TEST-001',
+        Payment_Method: {
+          Account_Holder: 'นาย ทด สอบ',
+          Account_Number: '012-1-23456-7',
+          Bank: 'ธนาคารกรุงศรี',
+          Branch: 'เอสพละนาด รัชดาภิเษก',
+          Name: 'TEST payment',
+          PromptPay: '0123456789',
+          id: 2,
         },
-        "Provider": {
-          "Address": "99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก เขตพระโขนง กรุงเทพฯ 10260",
-          "Email": "provider@example.com",
-          "Name": "บริษัท ผู้ให้บริการ จำกัด",
-          "Tax_ID": "8888888888888",
-          "id": 2
+        Provider: {
+          Address: '99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก เขตพระโขนง กรุงเทพฯ 10260',
+          Email: 'provider@example.com',
+          Name: 'บริษัท ผู้ให้บริการ จำกัด',
+          Tax_ID: '8888888888888',
+          id: 2,
         },
-        "Tax": 0.07,
-        "id": 5
-      }
+        Tax: 0.07,
+        id: 5,
+      },
     }
 
     record.value = sampleData
@@ -93,9 +96,7 @@ onMounted(() => {
 
 <template>
   <div class="app">
-    <div v-if="isLoading" class="app__loading">
-      กำลังโหลดข้อมูล...
-    </div>
+    <div v-if="isLoading" class="app__loading">กำลังโหลดข้อมูล...</div>
 
     <div v-else-if="error" class="app__error">
       <h2>เกิดข้อผิดพลาด</h2>
@@ -107,9 +108,7 @@ onMounted(() => {
       <PrintableDocument :record="record" />
     </div>
 
-    <div v-else class="app__no-data">
-      ไม่มีข้อมูลให้แสดง
-    </div>
+    <div v-else class="app__no-data">ไม่มีข้อมูลให้แสดง</div>
   </div>
 </template>
 

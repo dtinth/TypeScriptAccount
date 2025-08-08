@@ -5,19 +5,22 @@
         <div class="tax-summary__label">ยอดรวม</div>
         <div class="tax-summary__amount">{{ formatCurrency(subtotal) }}</div>
       </div>
-      
+
       <div v-if="taxInfo.label" class="tax-summary__row">
         <div class="tax-summary__label">{{ taxInfo.label }}</div>
-        <div class="tax-summary__amount" :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }">
+        <div
+          class="tax-summary__amount"
+          :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }"
+        >
           {{ taxInfo.percentage < 0 ? '-' : '' }}{{ formatCurrency(Math.abs(taxInfo.amount)) }}
         </div>
       </div>
-      
+
       <div class="tax-summary__row tax-summary__row--total">
         <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
         <div class="tax-summary__amount">{{ formatCurrency(total) }}</div>
       </div>
-      
+
       <div class="tax-summary__row tax-summary__row--baht-text">
         <div class="tax-summary__label">จำนวนเงิน (ตัวอักษร)</div>
         <div class="tax-summary__baht-text">{{ formatBahtText(total) }}</div>
@@ -108,7 +111,7 @@ const total = computed(() => {
   .tax-summary__table {
     width: 280px;
   }
-  
+
   .tax-summary__row {
     padding: 0.4rem 0;
   }

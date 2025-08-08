@@ -4,7 +4,9 @@
     <div class="client-info__details">
       <div class="client-info__name">{{ record.Record.Client.Name }}</div>
       <div class="client-info__address">{{ formatAddress(record.Record.Client.Address) }}</div>
-      <div class="client-info__tax-id">เลขประจำตัวผู้เสียภาษี: {{ record.Record.Client.Tax_ID }}</div>
+      <div class="client-info__tax-id">
+        เลขประจำตัวผู้เสียภาษี: {{ record.Record.Client.Tax_ID }}
+      </div>
     </div>
   </section>
 </template>

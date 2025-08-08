@@ -14,13 +14,20 @@
         <tr v-for="(item, index) in sortedItems" :key="item.id" class="items-table__row">
           <td class="items-table__cell items-table__cell--number">{{ index + 1 }}</td>
           <td class="items-table__cell items-table__cell--description">
-            <div v-if="isMarkdown(item.Description)" class="items-table__description items-table__description--markdown"
-              v-html="renderMarkdown(item.Description)" />
+            <div
+              v-if="isMarkdown(item.Description)"
+              class="items-table__description items-table__description--markdown"
+              v-html="renderMarkdown(item.Description)"
+            />
             <div v-else class="items-table__description">{{ item.Description }}</div>
           </td>
-          <td class="items-table__cell items-table__cell--quantity">{{ (item.Quantity) }}</td>
-          <td class="items-table__cell items-table__cell--unit-price">{{ formatCurrency(item.Unit_Price) }}</td>
-          <td class="items-table__cell items-table__cell--total">{{ formatCurrency(item.Total) }}</td>
+          <td class="items-table__cell items-table__cell--quantity">{{ item.Quantity }}</td>
+          <td class="items-table__cell items-table__cell--unit-price">
+            {{ formatCurrency(item.Unit_Price) }}
+          </td>
+          <td class="items-table__cell items-table__cell--total">
+            {{ formatCurrency(item.Total) }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -108,11 +115,11 @@ const sortedItems = computed(() => {
 }
 
 /* Remove vertical margins from first and last elements */
-.items-table__description--markdown>*:first-child {
+.items-table__description--markdown > *:first-child {
   margin-top: 0 !important;
 }
 
-.items-table__description--markdown>*:last-child {
+.items-table__description--markdown > *:last-child {
   margin-bottom: 0 !important;
 }
 

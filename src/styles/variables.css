@@ -8,35 +8,35 @@
   --font-size-lg: 11pt;
   --font-size-xl: 12pt;
   --font-size-2xl: 14pt;
-  
+
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  
+
   --line-height-tight: 1.2;
   --line-height-base: 1.4;
   --line-height-relaxed: 1.6;
-  
+
   /* Colors */
   --text-primary: #1f2937;
   --text-secondary: #4b5563;
   --text-muted: #6b7280;
   --text-error: #dc2626;
-  
+
   --bg-white: #ffffff;
   --bg-gray-50: #f9fafb;
   --bg-gray-100: #f3f4f6;
-  
+
   --border-light: #e5e7eb;
   --border-default: #d1d5db;
   --border-dark: #374151;
-  
+
   --primary-blue: #3b82f6;
   --primary-blue-dark: #2563eb;
   --secondary-gray: #6b7280;
   --secondary-gray-dark: #4b5563;
-  
+
   /* Spacing - using mm for precision */
   --spacing-xs: 1mm;
   --spacing-sm: 2mm;
@@ -44,19 +44,19 @@
   --spacing-lg: 6mm;
   --spacing-xl: 8mm;
   --spacing-2xl: 12mm;
-  
+
   /* Document Layout - exact A4 dimensions */
   --document-width: 210mm;
   --document-height: 297mm;
   --document-padding: 20mm;
   --document-shadow: 0 2mm 6mm rgba(0, 0, 0, 0.1);
-  
+
   /* Component Sizes */
   --table-cell-padding: 2mm 3mm;
   --table-cell-padding-compact: 1.5mm 2mm;
   --button-padding: 3mm 6mm;
   --border-radius: 2mm;
-  
+
   /* Screen scaling for A4 preview */
   --document-scale: min(1, calc((100vw - 40px) / var(--document-width)));
 }
@@ -70,7 +70,7 @@
     margin: 20px auto;
     box-sizing: border-box;
   }
-  
+
   /* Adjust app container for zoomed content */
   .app__content {
     display: flex;

@@ -20,7 +20,7 @@ export function isMarkdown(text: string): boolean {
   // Simple heuristic to detect if text contains markdown
   const markdownPatterns = [
     /\*\*[^*]+\*\*/, // Bold
-    /\*[^*]+\*/, // Italic  
+    /\*[^*]+\*/, // Italic
     /_[^_]+_/, // Italic underscore
     /`[^`]+`/, // Code
     /^\s*[-*+]\s+/m, // Lists
@@ -28,6 +28,6 @@ export function isMarkdown(text: string): boolean {
     /^#+\s+/m, // Headers
     /\[([^\]]+)\]\(([^)]+)\)/, // Links
   ]
-  
-  return markdownPatterns.some(pattern => pattern.test(text))
+
+  return markdownPatterns.some((pattern) => pattern.test(text))
 }

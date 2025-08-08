@@ -3,16 +3,22 @@
     <div class="document-header__provider">
       <h1 class="document-header__provider-name">{{ record.Record.Provider.Name }}</h1>
       <div class="document-header__provider-details">
-        <div class="document-header__address">{{ formatAddress(record.Record.Provider.Address) }}</div>
+        <div class="document-header__address">
+          {{ formatAddress(record.Record.Provider.Address) }}
+        </div>
         <div v-if="record.Record.Provider.Email" class="document-header__email">
           อีเมล: {{ record.Record.Provider.Email }}
         </div>
-        <div class="document-header__tax-id">เลขประจำตัวผู้เสียภาษี: {{ record.Record.Provider.Tax_ID }}</div>
+        <div class="document-header__tax-id">
+          เลขประจำตัวผู้เสียภาษี: {{ record.Record.Provider.Tax_ID }}
+        </div>
       </div>
     </div>
 
     <div class="document-header__info">
-      <h2 class="document-header__type">{{ getDocumentTypeInThai(record.Record.Document_Type[0]) }}</h2>
+      <h2 class="document-header__type">
+        {{ getDocumentTypeInThai(record.Record.Document_Type[0]) }}
+      </h2>
       <div class="document-header__details">
         <div class="document-header__number">เลขที่: {{ record.Record.Number }}</div>
         <div class="document-header__date">วันที่: {{ formatDate(record.Record.Date) }}</div>
@@ -22,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import type { GristRecord } from '../types/document-schema';
-import { formatDate, getDocumentTypeInThai } from '../utils/document';
+import type { GristRecord } from '../types/document-schema'
+import { formatDate, getDocumentTypeInThai } from '../utils/document'
 
 interface Props {
   record: GristRecord

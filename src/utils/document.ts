@@ -26,7 +26,7 @@ export function formatDate(dateString: string): string {
   return date.toLocaleDateString('th-TH', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }
 

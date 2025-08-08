@@ -1,5 +1,9 @@
 <template>
-  <article class="document" :data-document-type="documentType?.toLowerCase()" :data-document-id="record?.id">
+  <article
+    class="document"
+    :data-document-type="documentType?.toLowerCase()"
+    :data-document-id="record?.id"
+  >
     <DocumentHeader v-if="record" :record="record" />
 
     <ClientInfo v-if="record" :record="record" />
