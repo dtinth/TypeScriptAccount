@@ -13,4 +13,4 @@ declare global {
   }
 }
 
-export {}
+export const grist = window.grist

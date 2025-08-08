@@ -4,6 +4,7 @@ import ActionButtons from './components/ActionButtons.vue'
 import PrintableDocument from './components/PrintableDocument.vue'
 import type { GristRecord } from './types/document-schema'
 import { GristRecordSchema } from './types/document-schema'
+import { grist } from './utils/grist'
 
 // Import fonts and styles
 import '@fontsource/sarabun/400.css'
@@ -20,11 +21,11 @@ const isLoading = ref(true)
 onMounted(() => {
   // Check if grist is available
   if (
-    typeof window.grist !== 'undefined' &&
+    grist &&
     !new URLSearchParams(window.location.search).has('standalone')
   ) {
-    window.grist.ready()
-    window.grist.onRecord(function (recordData: unknown) {
+    grist.ready()
+    grist.onRecord(function (recordData: unknown) {
       try {
         // Validate the record data with Zod
         const validatedRecord = GristRecordSchema.parse(recordData)
