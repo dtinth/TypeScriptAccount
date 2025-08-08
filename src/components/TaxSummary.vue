@@ -14,12 +14,10 @@
 
         <div class="tax-summary__row tax-summary__row--total">
           <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
-          <div class="tax-summary__amount">{{ formatCurrency(total) }}</div>
-        </div>
-
-        <div class="tax-summary__row tax-summary__row--baht-text">
-          <div class="tax-summary__label">จำนวนเงิน (ตัวอักษร)</div>
-          <div class="tax-summary__baht-text">{{ formatBahtText(total) }}</div>
+          <div class="tax-summary__amount">
+            {{ formatCurrency(total) }}
+            <div class="tax-summary__baht-text">({{ formatBahtText(total) }})</div>
+          </div>
         </div>
       </div>
   </section>
@@ -76,13 +74,6 @@ const total = computed(() => {
   font-size: var(--font-size-base);
 }
 
-.tax-summary__row--baht-text {
-  border-bottom: none;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  padding-top: var(--spacing-md);
-}
-
 .tax-summary__label {
   color: var(--text-primary);
 }
@@ -90,6 +81,7 @@ const total = computed(() => {
 .tax-summary__amount {
   color: var(--text-primary);
   font-weight: var(--font-weight-medium);
+  text-align: right;
 }
 
 .tax-summary__amount--negative {
@@ -99,7 +91,6 @@ const total = computed(() => {
 .tax-summary__baht-text {
   color: var(--text-primary);
   font-size: var(--font-size-xs);
-  font-style: italic;
-  text-align: right;
+  font-weight: normal;
 }
 </style>
