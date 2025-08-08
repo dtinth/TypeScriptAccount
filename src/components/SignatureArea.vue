@@ -24,6 +24,7 @@
 <style>
 .signature {
   margin-top: var(--spacing-lg);
+  page-break-inside: avoid;
 }
 
 .signature__grid {

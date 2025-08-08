@@ -1,24 +1,16 @@
 <template>
   <div class="action-buttons action-buttons--print-hidden">
-    <button
-      type="button"
-      class="action-buttons__button action-buttons__button--primary"
-      @click="handlePrint"
-    >
+    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint">
       🖨️ พิมพ์เอกสาร
     </button>
-    <button
-      type="button"
-      class="action-buttons__button action-buttons__button--secondary"
-      @click="handleCopyJson"
-    >
+    <button type="button" class="action-buttons__button action-buttons__button--secondary" @click="handleCopyJson">
       📋 คัดลอก JSON
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { GristRecord } from '../types/document-schema'
+import type { GristRecord } from '../types/document-schema';
 
 interface Props {
   record: GristRecord | null
@@ -49,7 +41,7 @@ function handleCopyJson() {
 .action-buttons {
   display: flex;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
   justify-content: center;
 }
 

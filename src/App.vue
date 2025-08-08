@@ -114,8 +114,6 @@ onMounted(() => {
 
 <style>
 .app {
-  min-height: 100vh;
-  background: var(--bg-gray-50);
   font-family: var(--font-family);
 }
 
@@ -154,19 +152,5 @@ onMounted(() => {
 .app__no-data {
   color: var(--text-muted);
   font-size: var(--font-size-lg);
-}
-
-.app__content {
-  padding: var(--spacing-lg) var(--spacing-sm);
-}
-
-@media print {
-  .app {
-    background: white;
-  }
-
-  .app__content {
-    padding: 0;
-  }
 }
 </style>

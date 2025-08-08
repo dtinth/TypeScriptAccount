@@ -1,9 +1,5 @@
 <template>
-  <article
-    class="document"
-    :data-document-type="documentType?.toLowerCase()"
-    :data-document-id="record?.id"
-  >
+  <article class="document" :data-document-type="documentType?.toLowerCase()" :data-document-id="record?.id">
     <DocumentHeader v-if="record" :record="record" />
 
     <ClientInfo v-if="record" :record="record" />
@@ -45,16 +41,30 @@ const documentType = computed(() => {
 
 <style>
 .document {
-  width: var(--document-width);
-  min-height: var(--document-height);
   padding: var(--document-padding);
-  background: var(--bg-white);
-  box-shadow: var(--document-shadow);
   font-family: var(--font-family);
   color: var(--text-primary);
   line-height: var(--line-height-base);
   box-sizing: border-box;
   position: relative;
+}
+
+@media print {
+  .document {
+    zoom: 1 !important;
+    width: 100% !important;
+    min-height: auto !important;
+  }
+}
+
+@media screen {
+  .document {
+    width: var(--document-width);
+    min-height: var(--document-height);
+    background: var(--bg-white);
+    box-shadow: var(--document-shadow);
+    zoom: var(--document-scale);
+  }
 }
 
 .document__payment-section {

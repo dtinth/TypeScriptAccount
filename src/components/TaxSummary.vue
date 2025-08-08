@@ -8,32 +8,28 @@
 
       <div v-if="taxInfo.label" class="tax-summary__row">
         <div class="tax-summary__label">{{ taxInfo.label }}</div>
-        <div
-          class="tax-summary__amount"
-          :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }"
-        >
-          {{ taxInfo.percentage < 0 ? '-' : '' }}{{ formatCurrency(Math.abs(taxInfo.amount)) }}
+        <div class="tax-summary__amount" :class="{ 'tax-summary__amount--negative': taxInfo.percentage < 0 }">
+          {{ taxInfo.percentage < 0 ? '-' : '' }}{{ formatCurrency(Math.abs(taxInfo.amount)) }} </div>
+        </div>
+
+        <div class="tax-summary__row tax-summary__row--total">
+          <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
+          <div class="tax-summary__amount">{{ formatCurrency(total) }}</div>
+        </div>
+
+        <div class="tax-summary__row tax-summary__row--baht-text">
+          <div class="tax-summary__label">จำนวนเงิน (ตัวอักษร)</div>
+          <div class="tax-summary__baht-text">{{ formatBahtText(total) }}</div>
         </div>
       </div>
-
-      <div class="tax-summary__row tax-summary__row--total">
-        <div class="tax-summary__label">จำนวนเงินสุทธิ</div>
-        <div class="tax-summary__amount">{{ formatCurrency(total) }}</div>
-      </div>
-
-      <div class="tax-summary__row tax-summary__row--baht-text">
-        <div class="tax-summary__label">จำนวนเงิน (ตัวอักษร)</div>
-        <div class="tax-summary__baht-text">{{ formatBahtText(total) }}</div>
-      </div>
-    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { GristRecord } from '../types/document-schema'
+import { formatBahtText, formatCurrency } from '../utils/currency'
 import { calculateSubtotal } from '../utils/document'
-import { formatCurrency, formatBahtText } from '../utils/currency'
 import { getTaxInfo } from '../utils/tax'
 
 interface Props {
@@ -105,15 +101,5 @@ const total = computed(() => {
   font-size: var(--font-size-xs);
   font-style: italic;
   text-align: right;
-}
-
-@media print {
-  .tax-summary__table {
-    width: 280px;
-  }
-
-  .tax-summary__row {
-    padding: 0.4rem 0;
-  }
 }
 </style>
