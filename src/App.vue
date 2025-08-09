@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted } from 'vue'
 import ActionButtons from './components/ActionButtons.vue'
 import PrintableDocument from './components/PrintableDocument.vue'
-import type { GristRecord } from './types/document-schema'
-import { GristRecordSchema } from './types/document-schema'
-import { grist } from './utils/grist'
+import { useAppState } from './composables/useAppState'
 
 // Import fonts and styles
 import '@fontsource/sarabun/400.css'
@@ -16,109 +14,22 @@ import './styles/global.css'
 import './styles/print.css'
 import './styles/variables.css'
 
-const record = ref<GristRecord | null>(null)
-const rawGristData = ref<unknown>(null)
-const error = ref<string | null>(null)
-const isLoading = ref(true)
+const {
+  record,
+  rawGristData,
+  error,
+  isLoading,
+  customCss,
+  showSettings,
+  settingsRef,
+  isCssChanged,
+  onLoadScenario,
+  saveCustomCss,
+  initializeGrist
+} = useAppState()
 
-function onLoadScenario(data: GristRecord) {
-  record.value = data
-  rawGristData.value = data
-  error.value = null
-  isLoading.value = false
-}
-
-watch(record, (r) => {
-  if (r?.Record?.Number) {
-    document.title = r.Record.Number
-  }
-})
-
-onMounted(() => {
-  // Check if grist is available
-  if (
-    grist &&
-    !new URLSearchParams(window.location.search).has('standalone') &&
-    window.parent !== window.self
-  ) {
-    grist.ready()
-    grist.onRecord(function (recordData: unknown) {
-      try {
-        // Store raw data for JSON copy functionality
-        rawGristData.value = recordData
-        // Validate the record data with Zod
-        const validatedRecord = GristRecordSchema.parse(recordData)
-        record.value = validatedRecord
-        error.value = null
-      } catch (err) {
-        console.error('Invalid record data:', err)
-        error.value = 'ข้อมูลไม่ถูกต้อง: ' + (err instanceof Error ? err.message : String(err))
-        record.value = null
-        rawGristData.value = null
-      } finally {
-        isLoading.value = false
-      }
-    })
-  } else {
-    // Standalone mode with sample data for testing
-    const sampleData: GristRecord = {
-      id: 5,
-      Record: {
-        Client: {
-          Address: '123/45 หมู่ 6 ถ.ตัวอย่าง แขวงบ้านใหม่\nอ.ปากเกร็ด จ.นนทบุรี 11120',
-          Name: 'บริษัท ลูกค้า จำกัด',
-          Tax_ID: '9999999999999',
-          id: 3,
-        },
-        Date: '2025-08-09T00:00:00.000Z',
-        Document_Type: ['Receipt'],
-        Items: [
-          {
-            Description: '**ไอเทมทดสอบ** - รายการสำคัญ\n- คุณภาพสูง\n- รหัสสินค้า: `TEST001`',
-            Document: {
-              tableId: 'Documents',
-              rowId: 5,
-            },
-            Manual_Sort: 1,
-            Quantity: 2,
-            Total: 198,
-            Unit_Price: 99,
-            id: 5,
-          },
-        ],
-        Number: 'TEST-001',
-        Payment_Method: {
-          Account_Holder: 'นาย ทด สอบ',
-          Account_Number: '012-1-23456-7',
-          Bank: 'ธนาคารกรุงศรี',
-          Branch: 'เอสพละนาด รัชดาภิเษก',
-          Name: 'TEST payment',
-          PromptPay: '0123456789',
-          id: 2,
-        },
-        Provider: {
-          Address: '99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก\nเขตพระโขนง กรุงเทพฯ 10260',
-          Email: 'provider@example.com',
-          Name: 'บริษัท ผู้ให้บริการ จำกัด',
-          Personnel_Name: 'นาย โปร แก้ได้หมด',
-          Tax_ID: '8888888888888',
-          id: 2,
-        },
-        Reference: {
-          Number: 'REF-001',
-          id: 1,
-        },
-        Remarks: '### หมายเหตุสำคัญ\n\nเอกสารนี้เป็น **ตัวอย่าง** สำหรับการทดสอบระบบ\n\n- กรุณาตรวจสอบข้อมูลก่อนชำระเงิน\n- `TEST001` คือรหัสสินค้าทดสอบ\n- สินค้าจะจัดส่งภายใน 7 วัน',
-        Tax: 0.07,
-        id: 5,
-      },
-    }
-
-    record.value = sampleData
-    rawGristData.value = sampleData
-    error.value = null
-    isLoading.value = false
-  }
+onMounted(async () => {
+  await initializeGrist()
 })
 </script>
 
@@ -148,6 +59,37 @@ onMounted(() => {
           <PrintableDocument :record="record" />
         </template>
       </div>
+
+      <!-- CSS Settings Section -->
+      <div ref="settingsRef" class="app__settings" :class="{ 'app__settings--open': showSettings }">
+        <div class="app__settings-header">
+          <button type="button" class="app__settings-toggle" @click="showSettings = !showSettings">
+            {{ showSettings ? '▼' : '▶' }} Custom CSS Settings
+          </button>
+        </div>
+
+        <div v-if="showSettings" class="app__settings-content">
+          <div class="app__settings-field">
+            <label for="custom-css" class="app__settings-label">
+              Custom CSS:
+            </label>
+            <textarea id="custom-css" v-model="customCss" class="app__settings-textarea" placeholder=".document {
+  --font-family: Comic Sans MS, Itim, sans-serif;
+}" rows="10"></textarea>
+          </div>
+
+          <div class="app__settings-actions">
+            <button 
+              type="button" 
+              class="app__settings-apply" 
+              :disabled="!isCssChanged"
+              @click="saveCustomCss"
+            >
+              Apply CSS
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div v-else class="app__no-data">ไม่มีข้อมูลให้แสดง</div>
@@ -156,7 +98,7 @@ onMounted(() => {
 
 <style>
 .app {
-  font-family: var(--font-family);
+  font-family: var(--font-family-system);
 }
 
 .app__loading,
@@ -181,6 +123,8 @@ onMounted(() => {
   gap: var(--spacing-md);
   background: white;
   border-radius: 8px;
+  max-width: var(--document-width);
+  margin: 0 auto;
 }
 
 .app__signed-text {
@@ -225,5 +169,117 @@ onMounted(() => {
 .app__no-data {
   color: var(--text-muted);
   font-size: var(--font-size-lg);
+}
+
+/* CSS Settings Styles */
+.app__settings {
+  max-width: var(--document-width);
+  margin: var(--spacing-lg) auto;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  background: white;
+  overflow: hidden;
+}
+
+@media print {
+  .app__settings {
+    display: none !important;
+  }
+}
+
+.app__settings-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.app__settings-toggle {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background-color 0.2s;
+}
+
+.app__settings-toggle:hover {
+  background: #f0f0f0;
+}
+
+.app__settings-content {
+  padding: var(--spacing-lg);
+}
+
+.app__settings-field {
+  margin-bottom: var(--spacing-lg);
+}
+
+.app__settings-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.app__settings-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: var(--spacing-md);
+  border: 1px solid #d0d0d0;
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fafafa;
+  color: var(--text-primary);
+}
+
+.app__settings-textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.app__settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+}
+
+.app__settings-apply {
+  padding: var(--button-padding);
+  background-color: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-system);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.app__settings-apply:hover {
+  background-color: var(--primary-blue-dark);
+}
+
+.app__settings-apply:active {
+  transform: translateY(1px);
+}
+
+.app__settings-apply:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.app__settings-apply:disabled:hover {
+  background-color: #d1d5db;
 }
 </style>

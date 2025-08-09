@@ -1,7 +1,9 @@
 /* CSS Variables for Thai Document Theme using Print Units */
 :root {
   /* Typography - using pt (points) for print accuracy */
+  --font-family-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+  --font-family-mono: 'Share Tech Mono', 'Courier New', monospace;
   --font-size-xs: 7pt;
   --font-size-sm: 8pt;
   --font-size-base: 9pt;
@@ -14,9 +16,9 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.2;
-  --line-height-base: 1.4;
-  --line-height-relaxed: 1.6;
+  --line-height-tight: 1.2em;
+  --line-height-base: 1.4em;
+  --line-height-relaxed: 1.6em;
 
   /* Colors */
   --text-primary: #1f2937;

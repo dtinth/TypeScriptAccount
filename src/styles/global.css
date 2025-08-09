@@ -20,7 +20,7 @@ code {
   padding: 0.5mm 1mm;
   border-radius: 1mm;
   font-size: var(--font-size-sm);
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-family: var(--font-family-mono);
 }
 
 /* Lists */
