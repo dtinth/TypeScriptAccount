@@ -2,9 +2,9 @@
 :root {
   /* Typography - using pt (points) for print accuracy */
   --font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
-  --font-size-xs: 8pt;
-  --font-size-sm: 9pt;
-  --font-size-base: 10pt;
+  --font-size-xs: 7pt;
+  --font-size-sm: 8pt;
+  --font-size-base: 9pt;
   --font-size-lg: 11pt;
   --font-size-xl: 12pt;
   --font-size-2xl: 14pt;
@@ -48,7 +48,10 @@
   /* Document Layout - exact A4 dimensions */
   --document-width: 210mm;
   --document-height: 297mm;
-  --document-padding: 20mm;
+  --document-padding-top: 20mm;
+  --document-padding-right: 20mm;
+  --document-padding-bottom: 0;
+  --document-padding-left: 20mm;
   --document-shadow: 0 2mm 6mm rgba(0, 0, 0, 0.1);
 
   /* Component Sizes */
@@ -59,4 +62,14 @@
 
   /* Screen scaling for A4 preview */
   --document-scale: min(1, calc((100vw - 20px) / var(--document-width)));
+}
+
+/* Global heading styles */
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: var(--spacing-xs);
 }

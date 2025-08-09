@@ -1,0 +1,49 @@
+/* Global base element styling */
+
+/* Paragraphs */
+p {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+/* Text formatting */
+strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+em {
+  font-style: italic;
+}
+
+/* Inline code */
+code {
+  background-color: var(--bg-gray-100);
+  padding: 0.5mm 1mm;
+  border-radius: 1mm;
+  font-size: var(--font-size-sm);
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* Lists */
+ul,
+ol {
+  margin: var(--spacing-sm) 0;
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+  line-height: var(--line-height-base);
+}
+
+/* Links */
+a {
+  color: var(--primary-blue);
+  text-decoration: underline;
+}
+
+@media print {
+  a {
+    color: #000 !important;
+    text-decoration: none;
+  }
+}

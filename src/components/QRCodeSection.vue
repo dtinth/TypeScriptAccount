@@ -56,7 +56,6 @@ onMounted(async () => {
 }
 
 .qr-section {
-  margin-bottom: var(--spacing-xl);
   text-align: center;
 }
 

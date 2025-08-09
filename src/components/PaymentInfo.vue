@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GristRecord } from '../types/document-schema'
+import type { GristRecord } from '../types/document-schema';
 
 interface Props {
   record: GristRecord
@@ -44,19 +44,6 @@ const paymentMethod = props.record.Record.Payment_Method
 </script>
 
 <style>
-.payment-info {
-  margin-bottom: var(--spacing-lg);
-}
-
-.payment-info__title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-md) 0;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-default);
-  padding-bottom: var(--spacing-xs);
-}
-
 .payment-info__details {
   font-size: var(--font-size-sm);
 }

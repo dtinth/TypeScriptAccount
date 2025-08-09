@@ -14,11 +14,8 @@
         <tr v-for="(item, index) in viewModel.items" :key="item.id" class="items-table__row">
           <td class="items-table__cell items-table__cell--number">{{ index + 1 }}</td>
           <td class="items-table__cell items-table__cell--description">
-            <div
-              v-if="isMarkdown(item.description)"
-              class="items-table__description items-table__description--markdown"
-              v-html="renderMarkdown(item.description)"
-            />
+            <div v-if="isMarkdown(item.description)" class="items-table__description items-table__description--markdown"
+              v-html="renderMarkdown(item.description)" />
             <div v-else class="items-table__description">{{ item.description }}</div>
           </td>
           <td class="items-table__cell items-table__cell--quantity">{{ item.quantity }}</td>
@@ -60,7 +57,7 @@ const viewModel = computed(() => {
 .items-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
 }
 
 .items-table__header {
@@ -70,6 +67,7 @@ const viewModel = computed(() => {
   text-align: left;
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
+  font-size: var(--font-size-base);
 }
 
 .items-table__cell {
@@ -77,6 +75,7 @@ const viewModel = computed(() => {
   padding: var(--table-cell-padding);
   color: var(--text-primary);
   vertical-align: top;
+  font-size: var(--font-size-base);
 }
 
 .items-table__header--number,
@@ -89,6 +88,10 @@ const viewModel = computed(() => {
 .items-table__cell--description {
   width: auto;
   min-width: 7cm;
+}
+
+.items-table__cell--description {
+  font-size: var(--font-size-sm);
 }
 
 .items-table__header--quantity,
@@ -109,61 +112,28 @@ const viewModel = computed(() => {
   text-align: right;
 }
 
-/* Markdown description styling */
-.items-table__description--markdown {
-  line-height: var(--line-height-base);
-}
-
 /* Remove vertical margins from first and last elements */
-.items-table__description--markdown > *:first-child {
+.items-table__description--markdown>*:first-child {
   margin-top: 0 !important;
 }
 
-.items-table__description--markdown > *:last-child {
+.items-table__description--markdown>*:last-child {
   margin-bottom: 0 !important;
 }
 
+/* Table-specific overrides for tighter spacing in cells */
 .items-table__description--markdown p {
   margin: 0 0 var(--spacing-xs) 0;
-}
-
-.items-table__description--markdown strong {
-  font-weight: var(--font-weight-semibold);
-}
-
-.items-table__description--markdown em {
-  font-style: italic;
-}
-
-.items-table__description--markdown code {
-  background-color: var(--bg-gray-100);
-  padding: 0.5mm 1mm;
-  border-radius: 1mm;
-  font-size: 8pt;
-  font-family: 'Courier New', monospace;
 }
 
 .items-table__description--markdown ul,
 .items-table__description--markdown ol {
   margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
   padding-left: 3mm;
-  font-size: 8pt;
 }
 
 .items-table__description--markdown li {
-  margin-bottom: var(--spacing-xs);
   line-height: var(--line-height-tight);
-}
-
-.items-table__description--markdown a {
-  color: var(--primary-blue);
-  text-decoration: underline;
-}
-
-@media print {
-  .items-table__description--markdown a {
-    color: #000 !important;
-    text-decoration: none;
-  }
 }
 </style>

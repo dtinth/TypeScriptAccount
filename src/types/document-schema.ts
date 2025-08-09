@@ -40,6 +40,11 @@ export const ItemSchema = z.object({
 
 export const DocumentTypeSchema = z.enum(['Quotation', 'Invoice', 'Receipt'])
 
+export const ReferenceSchema = z.object({
+  Number: z.string(),
+  id: z.number(),
+}).nullish()
+
 export const RecordDataSchema = z.object({
   Client: ClientSchema,
   Date: z.string(), // ISO date string
@@ -48,6 +53,8 @@ export const RecordDataSchema = z.object({
   Number: z.string(),
   Payment_Method: PaymentMethodSchema.nullish(),
   Provider: ProviderSchema,
+  Reference: ReferenceSchema,
+  Remarks: z.string().nullish(),
   Tax: z.number(),
   id: z.number(),
 })
@@ -63,5 +70,6 @@ export type Client = z.infer<typeof ClientSchema>
 export type Provider = z.infer<typeof ProviderSchema>
 export type Item = z.infer<typeof ItemSchema>
 export type DocumentType = z.infer<typeof DocumentTypeSchema>
+export type Reference = z.infer<typeof ReferenceSchema>
 export type RecordData = z.infer<typeof RecordDataSchema>
 export type GristRecord = z.infer<typeof GristRecordSchema>

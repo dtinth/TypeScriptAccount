@@ -11,10 +11,13 @@ import '@fontsource/sarabun/400.css'
 import '@fontsource/sarabun/500.css'
 import '@fontsource/sarabun/600.css'
 import '@fontsource/sarabun/700.css'
+import '@fontsource/share-tech-mono/400.css'
+import './styles/global.css'
 import './styles/print.css'
 import './styles/variables.css'
 
 const record = ref<GristRecord | null>(null)
+const rawGristData = ref<unknown>(null)
 const error = ref<string | null>(null)
 const isLoading = ref(true)
 
@@ -22,11 +25,14 @@ onMounted(() => {
   // Check if grist is available
   if (
     grist &&
-    !new URLSearchParams(window.location.search).has('standalone')
+    !new URLSearchParams(window.location.search).has('standalone') &&
+    window.parent !== window.self
   ) {
     grist.ready()
     grist.onRecord(function (recordData: unknown) {
       try {
+        // Store raw data for JSON copy functionality
+        rawGristData.value = recordData
         // Validate the record data with Zod
         const validatedRecord = GristRecordSchema.parse(recordData)
         record.value = validatedRecord
@@ -35,6 +41,7 @@ onMounted(() => {
         console.error('Invalid record data:', err)
         error.value = 'ข้อมูลไม่ถูกต้อง: ' + (err instanceof Error ? err.message : String(err))
         record.value = null
+        rawGristData.value = null
       } finally {
         isLoading.value = false
       }
@@ -45,7 +52,7 @@ onMounted(() => {
       id: 5,
       Record: {
         Client: {
-          Address: '123/45 หมู่ 6 ถ.ตัวอย่าง แขวงบ้านใหม่ อ.ปากเกร็ด จ.นนทบุรี 11120',
+          Address: '123/45 หมู่ 6 ถ.ตัวอย่าง แขวงบ้านใหม่\nอ.ปากเกร็ด จ.นนทบุรี 11120',
           Name: 'บริษัท ลูกค้า จำกัด',
           Tax_ID: '9999999999999',
           id: 3,
@@ -77,18 +84,24 @@ onMounted(() => {
           id: 2,
         },
         Provider: {
-          Address: '99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก เขตพระโขนง กรุงเทพฯ 10260',
+          Address: '99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก\nเขตพระโขนง กรุงเทพฯ 10260',
           Email: 'provider@example.com',
           Name: 'บริษัท ผู้ให้บริการ จำกัด',
           Tax_ID: '8888888888888',
           id: 2,
         },
+        Reference: {
+          Number: 'REF-001',
+          id: 1,
+        },
+        Remarks: '### หมายเหตุสำคัญ\n\nเอกสารนี้เป็น **ตัวอย่าง** สำหรับการทดสอบระบบ\n\n- กรุณาตรวจสอบข้อมูลก่อนชำระเงิน\n- `TEST001` คือรหัสสินค้าทดสอบ\n- สินค้าจะจัดส่งภายใน 7 วัน',
         Tax: 0.07,
         id: 5,
       },
     }
 
     record.value = sampleData
+    rawGristData.value = sampleData
     error.value = null
     isLoading.value = false
   }
@@ -105,7 +118,7 @@ onMounted(() => {
     </div>
 
     <div v-else-if="record" class="app__content">
-      <ActionButtons :record="record" />
+      <ActionButtons :record="record" :raw-grist-data="rawGristData" />
       <PrintableDocument :record="record" />
     </div>
 

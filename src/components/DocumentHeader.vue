@@ -4,7 +4,7 @@
       <h1 class="document-header__provider-name">{{ record.Record.Provider.Name }}</h1>
       <div class="document-header__provider-details">
         <div class="document-header__address">
-          {{ formatAddress(record.Record.Provider.Address) }}
+          {{ trimAddress(record.Record.Provider.Address) }}
         </div>
         <div v-if="record.Record.Provider.Email" class="document-header__email">
           อีเมล: {{ record.Record.Provider.Email }}
@@ -22,23 +22,32 @@
       <div class="document-header__details">
         <div class="document-header__number">เลขที่: {{ record.Record.Number }}</div>
         <div class="document-header__date">วันที่: {{ formatDate(record.Record.Date) }}</div>
+        <div v-if="viewModel.reference.number" class="document-header__reference">
+          อ้างอิง: {{ viewModel.reference.number }}
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { formatDate, getDocumentTypeInThai } from '../utils/document'
+import { getViewModel } from '../utils/view-model'
 
 interface Props {
   record: GristRecord
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-function formatAddress(address: string): string {
-  return address.replace(/\n/g, ' ')
+const viewModel = computed(() => {
+  return getViewModel(props.record)
+})
+
+function trimAddress(address: string): string {
+  return address.trim()
 }
 </script>
 
@@ -67,7 +76,11 @@ function formatAddress(address: string): string {
   color: var(--text-secondary);
 }
 
-.document-header__address,
+.document-header__address {
+  margin-bottom: var(--spacing-xs);
+  white-space: pre-line;
+}
+
 .document-header__email,
 .document-header__tax-id {
   margin-bottom: var(--spacing-xs);
@@ -91,7 +104,8 @@ function formatAddress(address: string): string {
 }
 
 .document-header__number,
-.document-header__date {
+.document-header__date,
+.document-header__reference {
   margin-bottom: var(--spacing-xs);
 }
 </style>

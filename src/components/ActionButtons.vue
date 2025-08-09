@@ -14,6 +14,7 @@ import type { GristRecord } from '../types/document-schema';
 
 interface Props {
   record: GristRecord | null
+  rawGristData: unknown
 }
 
 const props = defineProps<Props>()
@@ -23,9 +24,9 @@ function handlePrint() {
 }
 
 function handleCopyJson() {
-  if (props.record) {
+  if (props.rawGristData) {
     navigator.clipboard
-      .writeText(JSON.stringify(props.record, null, 2))
+      .writeText(JSON.stringify(props.rawGristData, null, 2))
       .then(() => {
         alert('JSON ถูกคัดลอกแล้ว')
       })

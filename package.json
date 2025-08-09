@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@fontsource/sarabun": "^5.2.6",
+    "@fontsource/share-tech-mono": "^5.2.6",
     "baht": "^0.7.1",
     "micromark": "^4.0.2",
     "promptpay-qr": "^0.5.0",

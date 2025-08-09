@@ -1,5 +1,5 @@
 import type { GristRecord } from '../types/document-schema'
-import type { DocumentViewModel, DisplayItem, TaxInfo, PaymentInfo, BankInfo } from '../types/view-model'
+import type { DocumentViewModel, DisplayItem, TaxInfo, PaymentInfo, BankInfo, ReferenceInfo } from '../types/view-model'
 import { calculateSubtotal, sortItems } from './document'
 import { getTaxInfo } from './tax'
 
@@ -48,13 +48,23 @@ export function getViewModel(record: GristRecord): DocumentViewModel {
     bankDetails
   }
 
+  // Transform reference info
+  const reference: ReferenceInfo = {
+    number: record.Record.Reference?.Number ?? null
+  }
+
+  // Get remarks
+  const remarks = record.Record.Remarks ?? null
+
   // Create view model
   const viewModel: DocumentViewModel = {
     items,
     subtotal,
     tax,
     total,
-    paymentInfo
+    paymentInfo,
+    reference,
+    remarks
   }
 
   // Cache and return

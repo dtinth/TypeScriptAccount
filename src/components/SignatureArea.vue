@@ -1,24 +1,45 @@
 <template>
   <footer class="signature">
-    <div class="signature__grid">
+    <!-- Quotation: Two signature boxes -->
+    <div v-if="isQuotation" class="signature__grid">
       <div class="signature__section">
-        <div class="signature__label">ผู้รับเงิน</div>
+        <div class="signature__text">เสนอราคาโดย</div>
         <div class="signature__line"></div>
-        <div class="signature__text">ลงชื่อ ................................</div>
-        <div class="signature__date">วันที่ ..../..../......</div>
+        <div class="signature__name">{{ record.Record.Provider.Name }}</div>
       </div>
       <div class="signature__section">
-        <div class="signature__label">ผู้จ่ายเงิน</div>
+        <div class="signature__text">อนุมัติโดย</div>
         <div class="signature__line"></div>
-        <div class="signature__text">ลงชื่อ ................................</div>
-        <div class="signature__date">วันที่ ..../..../......</div>
+        <div class="signature__name">...................................................................
+        </div>
+        <div class="signature__date">วันที่ ....../....../.........</div>
+      </div>
+    </div>
+
+    <!-- Invoice & Receipt: Single signature on right -->
+    <div v-else class="signature__single">
+      <div class="signature__section signature__section--right">
+        <div class="signature__text">ลงชื่อ</div>
+        <div class="signature__line"></div>
+        <div class="signature__name">{{ record.Record.Provider.Name }}</div>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-// No props needed for signature area
+import { computed } from 'vue';
+import type { GristRecord } from '../types/document-schema';
+
+interface Props {
+  record: GristRecord
+}
+
+const props = defineProps<Props>()
+
+const isQuotation = computed(() => {
+  return props.record.Record.Document_Type.includes('Quotation')
+})
 </script>
 
 <style>
@@ -27,36 +48,48 @@
   page-break-inside: avoid;
 }
 
+/* Quotation: Two signature boxes */
 .signature__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Invoice & Receipt: Single signature on right */
+.signature__single {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .signature__section {
   text-align: center;
-}
-
-.signature__label {
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-md);
-  color: var(--text-primary);
-}
-
-.signature__line {
-  height: 60px;
-  border: 1px dashed var(--border-default);
-  margin-bottom: var(--spacing-sm);
+  width: 5cm;
 }
 
 .signature__text {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  text-align: left;
+}
+
+.signature__line {
+  height: var(--spacing-xl);
+  border-bottom: 1px solid var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.signature__name {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.signature__blank-line {
+  height: var(--spacing-sm);
 }
 
 .signature__date {
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
+  margin-top: var(--spacing-sm);
 }
 </style>

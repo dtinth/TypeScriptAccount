@@ -1,5 +1,6 @@
 <template>
-  <article class="document" :data-document-type="documentType?.toLowerCase()" :data-document-id="record?.id">
+  <article class="document" :data-document-type="documentType?.toLowerCase()" :data-document-id="record?.id"
+    :data-provider-name="providerName" :data-customer-name="customerName" :data-payment-method-name="paymentMethodName">
     <DocumentHeader v-if="record" :record="record" />
 
     <ClientInfo v-if="record" :record="record" />
@@ -8,12 +9,14 @@
 
     <TaxSummary v-if="record" :record="record" />
 
+    <RemarksSection v-if="record" :record="record" />
+
     <div v-if="record?.Record.Payment_Method" class="document__payment-section">
       <PaymentInfo v-if="record" :record="record" />
       <QRCodeSection v-if="record" :record="record" />
     </div>
 
-    <SignatureArea />
+    <SignatureArea v-if="record" :record="record" />
   </article>
 </template>
 
@@ -25,6 +28,7 @@ import DocumentHeader from './DocumentHeader.vue'
 import ItemsTable from './ItemsTable.vue'
 import PaymentInfo from './PaymentInfo.vue'
 import QRCodeSection from './QRCodeSection.vue'
+import RemarksSection from './RemarksSection.vue'
 import SignatureArea from './SignatureArea.vue'
 import TaxSummary from './TaxSummary.vue'
 
@@ -37,11 +41,23 @@ const props = defineProps<Props>()
 const documentType = computed(() => {
   return props.record?.Record.Document_Type[0] || null
 })
+
+const providerName = computed(() => {
+  return props.record?.Record.Provider.Name || null
+})
+
+const customerName = computed(() => {
+  return props.record?.Record.Client.Name || null
+})
+
+const paymentMethodName = computed(() => {
+  return props.record?.Record.Payment_Method?.Name || null
+})
 </script>
 
 <style>
 .document {
-  padding: var(--document-padding);
+  padding: var(--document-padding-top) var(--document-padding-right) var(--document-padding-bottom) var(--document-padding-left);
   font-family: var(--font-family);
   color: var(--text-primary);
   line-height: var(--line-height-base);
@@ -59,6 +75,8 @@ const documentType = computed(() => {
 
 @media screen {
   .document {
+    margin-left: auto;
+    margin-right: auto;
     width: var(--document-width);
     min-height: var(--document-height);
     background: var(--bg-white);
