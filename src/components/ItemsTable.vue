@@ -11,22 +11,22 @@
         </tr>
       </thead>
       <tbody class="items-table__body">
-        <tr v-for="(item, index) in sortedItems" :key="item.id" class="items-table__row">
+        <tr v-for="(item, index) in viewModel.items" :key="item.id" class="items-table__row">
           <td class="items-table__cell items-table__cell--number">{{ index + 1 }}</td>
           <td class="items-table__cell items-table__cell--description">
             <div
-              v-if="isMarkdown(item.Description)"
+              v-if="isMarkdown(item.description)"
               class="items-table__description items-table__description--markdown"
-              v-html="renderMarkdown(item.Description)"
+              v-html="renderMarkdown(item.description)"
             />
-            <div v-else class="items-table__description">{{ item.Description }}</div>
+            <div v-else class="items-table__description">{{ item.description }}</div>
           </td>
-          <td class="items-table__cell items-table__cell--quantity">{{ item.Quantity }}</td>
+          <td class="items-table__cell items-table__cell--quantity">{{ item.quantity }}</td>
           <td class="items-table__cell items-table__cell--unit-price">
-            {{ formatCurrency(item.Unit_Price) }}
+            {{ formatCurrency(item.unitPrice) }}
           </td>
           <td class="items-table__cell items-table__cell--total">
-            {{ formatCurrency(item.Total) }}
+            {{ formatCurrency(item.total) }}
           </td>
         </tr>
       </tbody>
@@ -38,8 +38,8 @@
 import { computed } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { formatCurrency } from '../utils/currency'
-import { sortItems } from '../utils/document'
 import { isMarkdown, renderMarkdown } from '../utils/markdown'
+import { getViewModel } from '../utils/view-model'
 
 interface Props {
   record: GristRecord
@@ -47,8 +47,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const sortedItems = computed(() => {
-  return sortItems(props.record.Record.Items)
+const viewModel = computed(() => {
+  return getViewModel(props.record)
 })
 </script>
 

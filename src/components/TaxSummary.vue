@@ -27,8 +27,7 @@
 import { computed } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { formatBahtText, formatCurrency } from '../utils/currency'
-import { calculateSubtotal } from '../utils/document'
-import { getTaxInfo } from '../utils/tax'
+import { getViewModel } from '../utils/view-model'
 
 interface Props {
   record: GristRecord
@@ -36,17 +35,13 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const subtotal = computed(() => {
-  return calculateSubtotal(props.record.Record.Items)
+const viewModel = computed(() => {
+  return getViewModel(props.record)
 })
 
-const taxInfo = computed(() => {
-  return getTaxInfo(props.record.Record.Tax, subtotal.value)
-})
-
-const total = computed(() => {
-  return subtotal.value + taxInfo.value.amount
-})
+const subtotal = computed(() => viewModel.value.subtotal)
+const taxInfo = computed(() => viewModel.value.tax)
+const total = computed(() => viewModel.value.total)
 </script>
 
 <style>

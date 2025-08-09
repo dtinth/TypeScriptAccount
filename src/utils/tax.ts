@@ -22,7 +22,7 @@ export function getTaxInfo(taxPercentage: number, subtotal: number): TaxInfo {
   if (taxPercentage < 0) {
     const whtPercentage = Math.abs(taxPercentage * 100)
     return {
-      label: `WHT ${whtPercentage}%`,
+      label: `ภาษีหัก ณ ที่จ่าย ${whtPercentage}%`,
       percentage: taxPercentage,
       amount: taxAmount,
       displayAmount: `${Math.abs(taxAmount).toFixed(2)}`,
