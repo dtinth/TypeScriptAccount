@@ -52,21 +52,19 @@ const total = computed(() => viewModel.value.total)
 }
 
 .tax-summary__table {
-  width: 300px;
-  font-size: var(--font-size-sm);
+  width: 50%;
 }
 
 .tax-summary__row {
   display: flex;
   justify-content: space-between;
-  padding: var(--spacing-sm) 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-bottom: 1px solid var(--border-light);
 }
 
 .tax-summary__row--total {
   border-bottom: 2px solid var(--border-dark);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-base);
 }
 
 .tax-summary__label {
@@ -86,6 +84,7 @@ const total = computed(() => viewModel.value.total)
 .tax-summary__baht-text {
   color: var(--text-primary);
   font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);
   font-weight: normal;
 }
 </style>

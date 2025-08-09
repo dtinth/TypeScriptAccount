@@ -45,16 +45,17 @@ const paymentMethod = props.record.Record.Payment_Method
 
 <style>
 .payment-info__details {
-  font-size: var(--font-size-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .payment-info__row {
   display: flex;
-  margin-bottom: var(--spacing-sm);
 }
 
 .payment-info__label {
-  width: 120px;
+  width: 2.5cm;
   color: var(--text-secondary);
   font-weight: var(--font-weight-medium);
 }

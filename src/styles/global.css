@@ -15,12 +15,20 @@ em {
 }
 
 /* Inline code */
-code {
+code:not(pre code) {
   background-color: var(--bg-gray-100);
   padding: 0.5mm 1mm;
   border-radius: 1mm;
+}
+
+pre,
+code {
   font-size: var(--font-size-sm);
   font-family: var(--font-family-mono);
+}
+
+pre {
+  line-height: var(--line-height-base);
 }
 
 /* Lists */
@@ -52,6 +60,7 @@ a {
 h3 {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-base);
   margin: 0 0 var(--spacing-md) 0;
   color: var(--text-primary);
   border-bottom: 1pt solid var(--border-default);

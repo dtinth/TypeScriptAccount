@@ -60,18 +60,11 @@ onMounted(async () => {
   width: 5cm;
 }
 
-.qr-section__title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-md) 0;
-  color: var(--text-primary);
-}
-
 .qr-section__container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
 }
 
 .qr-section__code {
@@ -92,10 +85,10 @@ onMounted(async () => {
 
 .qr-section__info {
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
   color: var(--text-secondary);
-}
-
-.qr-section__info-item {
-  margin-bottom: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 </style>

@@ -51,7 +51,7 @@ const viewModel = computed(() => {
 
 <style>
 .items-section {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
 }
 
 .items-table {
@@ -87,24 +87,23 @@ const viewModel = computed(() => {
 .items-table__header--description,
 .items-table__cell--description {
   width: auto;
-  min-width: 7cm;
 }
 
 .items-table__header--quantity,
 .items-table__cell--quantity {
-  width: 80px;
+  width: 1.5cm;
   text-align: right;
 }
 
 .items-table__header--unit-price,
 .items-table__cell--unit-price {
-  width: 120px;
+  width: 2cm;
   text-align: right;
 }
 
 .items-table__header--total,
 .items-table__cell--total {
-  width: 120px;
+  width: 2cm;
   text-align: right;
 }
 

@@ -60,6 +60,7 @@ const paymentMethodName = computed(() => {
   padding: var(--document-padding-top) var(--document-padding-right) var(--document-padding-bottom) var(--document-padding-left);
   font-family: var(--font-family);
   color: var(--text-primary);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   box-sizing: border-box;
   position: relative;

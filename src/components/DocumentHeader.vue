@@ -59,6 +59,7 @@ function trimAddress(address: string): string {
 <style>
 .document-header {
   display: flex;
+  gap: var(--spacing-md);
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: var(--spacing-lg);
@@ -66,12 +67,16 @@ function trimAddress(address: string): string {
 
 .document-header__provider {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .document-header__provider-name {
+  margin: 0;
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-xs) 0;
+  line-height: var(--line-height-base);
   color: var(--text-primary);
 }
 
@@ -79,43 +84,41 @@ function trimAddress(address: string): string {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
   color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .document-header__personnel {
   font-weight: var(--font-weight-semibold);
-  margin: 0 0 var(--spacing-sm) 0;
 }
 
 .document-header__address {
-  margin-bottom: var(--spacing-xs);
   white-space: pre-line;
-}
-
-.document-header__email,
-.document-header__tax-id {
-  margin-bottom: var(--spacing-xs);
 }
 
 .document-header__info {
   text-align: right;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .document-header__type {
+  margin: 0;
   font-size: var(--font-size-xl);
+  line-height: var(--line-height-base);
   font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-sm) 0;
   color: var(--text-primary);
 }
 
 .document-header__details {
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
   color: var(--text-secondary);
-}
-
-.document-header__number,
-.document-header__date,
-.document-header__reference {
-  margin-bottom: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 </style>

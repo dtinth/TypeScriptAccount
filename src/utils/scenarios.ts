@@ -617,7 +617,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Items: [
           {
             Description:
-              'เขียนสคริปต์ bash อัตโนมัติ\n```bash\nfor f in *.csv; do\n  node transform.js "$f" > output/"$f"\ndone\n```',
+              'เขียนสคริปต์ `bash` อัตโนมัติ\n```bash\nfor f in *.csv; do\n  node transform.js "$f" > output/"$f"\ndone\n```',
             Document: { tableId: 'Documents', rowId: 5901 },
             Manual_Sort: 1,
             Quantity: 1,
