@@ -14,8 +14,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 101,
       Record: {
         Client: {
-          Address:
-            '88/88 ชั้น 42 ตึกคลาวด์ซุปเปอร์ทาวเวอร์\nแขวงควันไฟ เขตดาต้า กรุงเทพฯ 10330',
+          Address: '88/88 ชั้น 42 ตึกคลาวด์ซุปเปอร์ทาวเวอร์\nแขวงควันไฟ เขตดาต้า กรุงเทพฯ 10330',
           Name: 'บริษัท กลุ่มเมฆมันส์ จำกัด',
           Tax_ID: '9781234567890',
           id: 201,
@@ -63,8 +62,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 401,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -78,6 +76,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Remarks:
           'ขอบคุณที่เรียกใช้บริการรอบดึก — ระบบกลับมานิ่งแล้ว ✅\n\n> Tip: โปรดอย่ากด kubectl delete all อีกนะครับ',
         Tax: 0.07,
+        Signed_Document_URL: 'https://example.com/signed/RCPT-2025-0001.pdf',
         id: 701,
       },
     },
@@ -89,8 +88,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 102,
       Record: {
         Client: {
-          Address:
-            '55/9 หมู่บ้านเซลล์ไฟล์ พาร์ค วิลล์\nต.กดเซฟ อ.ไม่เคยบันทึก จ.ไฟล์หาย 12120',
+          Address: '55/9 หมู่บ้านเซลล์ไฟล์ พาร์ค วิลล์\nต.กดเซฟ อ.ไม่เคยบันทึก จ.ไฟล์หาย 12120',
           Name: 'หจก. นอนน้อยแต่รวยมาก',
           Tax_ID: '7772223334445',
           id: 202,
@@ -129,8 +127,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 402,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -154,8 +151,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 103,
       Record: {
         Client: {
-          Address:
-            '999/1 อาคารขำขัน ชั้น 9 แขวงขำดี เขตหัวเราะ กรุงเทพฯ 10110',
+          Address: '999/1 อาคารขำขัน ชั้น 9 แขวงขำดี เขตหัวเราะ กรุงเทพฯ 10110',
           Name: 'บริษัท ขำขัน จำกัด',
           Tax_ID: '9900112233445',
           id: 203,
@@ -186,8 +182,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Number: 'QT-2025-0042',
         Payment_Method: null,
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -209,8 +204,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 104,
       Record: {
         Client: {
-          Address:
-            'หน้าปากซอยสบายใจ ถ.สุขใจ ต.อบอุ่น อ.ยิ้มแย้ม จ.บ้านเรา 40000',
+          Address: 'หน้าปากซอยสบายใจ ถ.สุขใจ ต.อบอุ่น อ.ยิ้มแย้ม จ.บ้านเรา 40000',
           Name: 'คุณป้าข้างซอย',
           Tax_ID: '0000000000000',
           id: 204,
@@ -248,8 +242,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 403,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -270,8 +263,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 105,
       Record: {
         Client: {
-          Address:
-            '21/7 อาคารใจนิ่ง ชั้น 3 ซอยเรียบร้อย\nแขวงโกดัง เขตใจเย็น กรุงเทพฯ 10500',
+          Address: '21/7 อาคารใจนิ่ง ชั้น 3 ซอยเรียบร้อย\nแขวงโกดัง เขตใจเย็น กรุงเทพฯ 10500',
           Name: 'บริษัท สายไฟสงบ จำกัด',
           Tax_ID: '5566778899001',
           id: 205,
@@ -345,8 +337,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 404,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -359,6 +350,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         },
         Remarks: 'รับประกันความเรียบร้อยของสายไฟ 90 วัน',
         Tax: 0.07,
+        Signed_Document_URL: 'https://example.com/signed/INV-2025-0022.pdf',
         id: 705,
       },
     },
@@ -370,8 +362,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 106,
       Record: {
         Client: {
-          Address:
-            '77/7 อาคารหมึกไม่หมด ซ.ปริ้นท์สบาย เขตลื่นไหล กรุงเทพฯ 10400',
+          Address: '77/7 อาคารหมึกไม่หมด ซ.ปริ้นท์สบาย เขตลื่นไหล กรุงเทพฯ 10400',
           Name: 'บริษัท หมึกดี จำกัด',
           Tax_ID: '1122334455667',
           id: 206,
@@ -401,8 +392,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Number: 'QT-2025-0088',
         Payment_Method: null,
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -423,8 +413,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 107,
       Record: {
         Client: {
-          Address:
-            '12/3 ชั้น 13 อาคารรีวิวโค้ด แขวงรวมพลัง เขตมุ่งมั่น กรุงเทพฯ 10240',
+          Address: '12/3 ชั้น 13 อาคารรีวิวโค้ด แขวงรวมพลัง เขตมุ่งมั่น กรุงเทพฯ 10240',
           Name: 'บริษัท โค้ดไม่ร้อง จำกัด',
           Tax_ID: '3141592653589',
           id: 207,
@@ -463,8 +452,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 405,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -485,8 +473,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 108,
       Record: {
         Client: {
-          Address:
-            'เลขที่ 1 หมู่บ้านฟ้าหลังฝน ต.โปร่งใส อ.โล่งใจ จ.ชุ่มชื้น 30330',
+          Address: 'เลขที่ 1 หมู่บ้านฟ้าหลังฝน ต.โปร่งใส อ.โล่งใจ จ.ชุ่มชื้น 30330',
           Name: 'องค์การจัดงานวุ่นวาย',
           Tax_ID: '2468135791357',
           id: 208,
@@ -533,8 +520,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 406,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -555,8 +541,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 109,
       Record: {
         Client: {
-          Address:
-            '22/22 ถนนริมทะเล ต.ลมเย็น อ.ชิลล์ จ.ระยอง 21000',
+          Address: '22/22 ถนนริมทะเล ต.ลมเย็น อ.ชิลล์ จ.ระยอง 21000',
           Name: 'รีสอร์ตลมทะเล',
           Tax_ID: '1357924680135',
           id: 209,
@@ -603,8 +588,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
           id: 407,
         },
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',
@@ -625,8 +609,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
       id: 110,
       Record: {
         Client: {
-          Address:
-            '4/44 ถนนชำนาญงาน ต.ตั้งใจ อ.มุ่งมั่น จ.มืออาชีพ 56000',
+          Address: '4/44 ถนนชำนาญงาน ต.ตั้งใจ อ.มุ่งมั่น จ.มืออาชีพ 56000',
           Name: 'วิสาหกิจชุมชน มือไวใจสู้',
           Tax_ID: '3216549870123',
           id: 210,
@@ -657,8 +640,7 @@ export const scenarios: { title: string; slug: string; data: GristRecord }[] = [
         Number: 'QT-2025-0101',
         Payment_Method: null,
         Provider: {
-          Address:
-            '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
+          Address: '123 ถนนแก้ปัญหา แขวงช่างกล เขตทุกจังหวัด\nราชอาณาจักรไทย 10000',
           Email: 'hero@fixall.th',
           Name: 'ฟรีแลนซ์แก้ปัญหาทั่วราชอาณาจักร',
           Personnel_Name: 'นาย โปร แก้ได้หมด',

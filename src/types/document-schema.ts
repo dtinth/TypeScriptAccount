@@ -41,10 +41,12 @@ export const ItemSchema = z.object({
 
 export const DocumentTypeSchema = z.enum(['Quotation', 'Invoice', 'Receipt'])
 
-export const ReferenceSchema = z.object({
-  Number: z.string(),
-  id: z.number(),
-}).nullish()
+export const ReferenceSchema = z
+  .object({
+    Number: z.string(),
+    id: z.number(),
+  })
+  .nullish()
 
 export const RecordDataSchema = z.object({
   Client: ClientSchema,
@@ -57,6 +59,7 @@ export const RecordDataSchema = z.object({
   Reference: ReferenceSchema,
   Remarks: z.string().nullish(),
   Tax: z.number(),
+  Signed_Document_URL: z.union([z.url(), z.literal('')]).nullish(),
   id: z.number(),
 })
 

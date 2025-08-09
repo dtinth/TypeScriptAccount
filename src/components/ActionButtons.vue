@@ -8,7 +8,8 @@
       </select>
     </div>
 
-    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint">
+    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint"
+      :disabled="props.disablePrint">
       🖨️ พิมพ์เอกสาร
     </button>
     <button type="button" class="action-buttons__button action-buttons__button--secondary" @click="handleCopyJson">
@@ -25,6 +26,7 @@ import { scenarios } from '../utils/scenarios'
 interface Props {
   record: GristRecord | null
   rawGristData: unknown
+  disablePrint?: boolean
 }
 
 const props = defineProps<Props>()
@@ -40,6 +42,7 @@ const standaloneMode = computed(() => {
 })
 
 function handlePrint() {
+  if (props.disablePrint) return
   window.print()
 }
 

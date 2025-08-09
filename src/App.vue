@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import ActionButtons from './components/ActionButtons.vue'
 import PrintableDocument from './components/PrintableDocument.vue'
 import type { GristRecord } from './types/document-schema'
@@ -27,6 +27,12 @@ function onLoadScenario(data: GristRecord) {
   error.value = null
   isLoading.value = false
 }
+
+watch(record, (r) => {
+  if (r?.Record?.Number) {
+    document.title = r.Record.Number
+  }
+})
 
 onMounted(() => {
   // Check if grist is available
@@ -126,8 +132,22 @@ onMounted(() => {
     </div>
 
     <div v-else-if="record" class="app__content">
-      <ActionButtons :record="record" :raw-grist-data="rawGristData" @load-scenario="onLoadScenario" />
-      <PrintableDocument :record="record" />
+      <ActionButtons :record="record" :raw-grist-data="rawGristData" :disablePrint="!!record.Record.Signed_Document_URL"
+        @load-scenario="onLoadScenario" />
+      <div class="app__main-content">
+        <template v-if="record.Record.Signed_Document_URL">
+          <div class="app__signed">
+            <p class="app__signed-text">เอกสารนี้ได้ถูกลงชื่อเรียบร้อยแล้ว</p>
+            <a class="app__signed-link" :href="record.Record.Signed_Document_URL" target="_blank"
+              rel="noopener noreferrer">
+              🔗 ดาวน์โหลดเอกสารที่ลงชื่อแล้ว
+            </a>
+          </div>
+        </template>
+        <template v-else>
+          <PrintableDocument :record="record" />
+        </template>
+      </div>
     </div>
 
     <div v-else class="app__no-data">ไม่มีข้อมูลให้แสดง</div>
@@ -149,6 +169,35 @@ onMounted(() => {
   min-height: 50vh;
   text-align: center;
   padding: var(--spacing-xl);
+}
+
+.app__signed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  text-align: center;
+  gap: var(--spacing-md);
+}
+
+.app__signed-text {
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+}
+
+.app__signed-link {
+  display: inline-block;
+  padding: var(--button-padding);
+  background-color: var(--primary-blue);
+  color: white;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.app__signed-link:hover {
+  background-color: var(--primary-blue-dark);
 }
 
 .app__loading {
