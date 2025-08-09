@@ -35,7 +35,7 @@ function trimAddress(address: string): string {
 .client-info__details {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .client-info__name {

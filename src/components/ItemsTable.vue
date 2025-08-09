@@ -90,10 +90,6 @@ const viewModel = computed(() => {
   min-width: 7cm;
 }
 
-.items-table__cell--description {
-  font-size: var(--font-size-sm);
-}
-
 .items-table__header--quantity,
 .items-table__cell--quantity {
   width: 80px;

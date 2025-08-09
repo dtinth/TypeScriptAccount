@@ -47,3 +47,14 @@ a {
     text-decoration: none;
   }
 }
+
+/* Global heading styles */
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-primary);
+  border-bottom: 1pt solid var(--border-default);
+  padding-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}

@@ -63,13 +63,3 @@
   /* Screen scaling for A4 preview */
   --document-scale: min(1, calc((100vw - 20px) / var(--document-width)));
 }
-
-/* Global heading styles */
-h3 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-md) 0;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-default);
-  padding-bottom: var(--spacing-xs);
-}

@@ -21,6 +21,13 @@ const rawGristData = ref<unknown>(null)
 const error = ref<string | null>(null)
 const isLoading = ref(true)
 
+function onLoadScenario(data: GristRecord) {
+  record.value = data
+  rawGristData.value = data
+  error.value = null
+  isLoading.value = false
+}
+
 onMounted(() => {
   // Check if grist is available
   if (
@@ -87,6 +94,7 @@ onMounted(() => {
           Address: '99/9 ซอยตัวอย่าง ถ.สุขุมวิท แขวงบางจาก\nเขตพระโขนง กรุงเทพฯ 10260',
           Email: 'provider@example.com',
           Name: 'บริษัท ผู้ให้บริการ จำกัด',
+          Personnel_Name: 'นาย โปร แก้ได้หมด',
           Tax_ID: '8888888888888',
           id: 2,
         },
@@ -118,7 +126,7 @@ onMounted(() => {
     </div>
 
     <div v-else-if="record" class="app__content">
-      <ActionButtons :record="record" :raw-grist-data="rawGristData" />
+      <ActionButtons :record="record" :raw-grist-data="rawGristData" @load-scenario="onLoadScenario" />
       <PrintableDocument :record="record" />
     </div>
 

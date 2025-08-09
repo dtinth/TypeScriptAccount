@@ -20,7 +20,8 @@ export const ClientSchema = z.object({
 export const ProviderSchema = z.object({
   Address: z.string(),
   Email: z.string().nullish(),
-  Name: z.string(),
+  Name: z.string(), // Brand name
+  Personnel_Name: z.string().nullish(), // Optional, for signature (ลงชื่อ)
   Tax_ID: z.string(),
   id: z.number(),
 })
@@ -67,7 +68,7 @@ export const GristRecordSchema = z.object({
 // TypeScript types derived from Zod schemas
 export type PaymentMethod = z.infer<typeof PaymentMethodSchema>
 export type Client = z.infer<typeof ClientSchema>
-export type Provider = z.infer<typeof ProviderSchema>
+export type Provider = z.infer<typeof ProviderSchema> // includes Personnel_Name
 export type Item = z.infer<typeof ItemSchema>
 export type DocumentType = z.infer<typeof DocumentTypeSchema>
 export type Reference = z.infer<typeof ReferenceSchema>

@@ -5,7 +5,7 @@
       <div class="signature__section">
         <div class="signature__text">เสนอราคาโดย</div>
         <div class="signature__line"></div>
-        <div class="signature__name">{{ record.Record.Provider.Name }}</div>
+        <div class="signature__name">{{ displayName }}</div>
       </div>
       <div class="signature__section">
         <div class="signature__text">อนุมัติโดย</div>
@@ -21,7 +21,7 @@
       <div class="signature__section signature__section--right">
         <div class="signature__text">ลงชื่อ</div>
         <div class="signature__line"></div>
-        <div class="signature__name">{{ record.Record.Provider.Name }}</div>
+        <div class="signature__name">{{ displayName }}</div>
       </div>
     </div>
   </footer>
@@ -39,6 +39,11 @@ const props = defineProps<Props>()
 
 const isQuotation = computed(() => {
   return props.record.Record.Document_Type.includes('Quotation')
+})
+
+const displayName = computed(() => {
+  const p = props.record.Record.Provider
+  return p.Personnel_Name ?? p.Name
 })
 </script>
 

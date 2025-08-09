@@ -57,6 +57,7 @@ onMounted(async () => {
 
 .qr-section {
   text-align: center;
+  width: 5cm;
 }
 
 .qr-section__title {
