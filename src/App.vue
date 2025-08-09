@@ -179,6 +179,8 @@ onMounted(() => {
   min-height: 40vh;
   text-align: center;
   gap: var(--spacing-md);
+  background: white;
+  border-radius: 8px;
 }
 
 .app__signed-text {
