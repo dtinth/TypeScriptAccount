@@ -69,7 +69,7 @@ jobs:
           CI: true
 
       - name: Percy
-        if: ${{ always() && secrets.PERCY_TOKEN != '' }}
+        if: ${{ always() && env.PERCY_TOKEN != '' }}
         run: bunx @percy/cli upload e2e-results/
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
