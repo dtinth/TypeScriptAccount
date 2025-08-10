@@ -2,25 +2,25 @@ import { expect } from '@playwright/test'
 import { PageObject } from '../PageObject'
 
 export class ActionButtonsTester extends PageObject {
-  // Locators
+  // Locators - Using semantic locators instead of CSS selectors
   get container() {
-    return this.page.locator('.action-buttons')
+    return this.page.getByTestId('action-buttons')
   }
 
   get scenarioSelector() {
-    return this.page.locator('#scenario-select')
+    return this.page.getByTestId('scenario-selector')
   }
 
   get scenarioSelectorContainer() {
-    return this.page.locator('.action-buttons__scenario')
+    return this.page.getByTestId('scenario-selector').locator('..')
   }
 
   get printButton() {
-    return this.page.locator('.action-buttons__button--primary')
+    return this.page.getByTestId('print-button')
   }
 
   get copyJsonButton() {
-    return this.page.locator('.action-buttons__button--secondary')
+    return this.page.getByTestId('copy-json-button')
   }
 
   // Actions

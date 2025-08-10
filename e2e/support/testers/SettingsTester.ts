@@ -2,25 +2,25 @@ import { expect } from '@playwright/test'
 import { PageObject } from '../PageObject'
 
 export class SettingsTester extends PageObject {
-  // Locators
+  // Locators - Using semantic locators instead of CSS selectors
   get toggle() {
-    return this.page.locator('.app__settings-toggle')
+    return this.page.getByTestId('settings-toggle')
   }
 
   get content() {
-    return this.page.locator('.app__settings-content')
+    return this.page.getByTestId('settings-content')
   }
 
   get customCssTextarea() {
-    return this.page.locator('#custom-css')
+    return this.page.getByTestId('custom-css-textarea')
   }
 
   get applyButton() {
-    return this.page.locator('.app__settings-apply')
+    return this.page.getByTestId('apply-settings-button')
   }
 
   get container() {
-    return this.page.locator('.app__settings')
+    return this.page.getByTestId('settings-panel')
   }
 
   // Actions

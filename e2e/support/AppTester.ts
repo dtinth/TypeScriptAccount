@@ -23,29 +23,29 @@ export class AppTester extends PageObject {
     return new SettingsTester(this.context)
   }
 
-  // App-wide locators
+  // App-wide locators - Using semantic locators instead of CSS selectors
   get app() {
-    return this.page.locator('.app')
+    return this.page.getByTestId('app')
   }
 
   get loading() {
-    return this.page.locator('.app__loading')
+    return this.page.getByTestId('app-loading')
   }
 
   get error() {
-    return this.page.locator('.app__error')
+    return this.page.getByTestId('app-error')
   }
 
   get content() {
-    return this.page.locator('.app__content')
+    return this.page.getByTestId('app-content')
   }
 
   get noData() {
-    return this.page.locator('.app__no-data')
+    return this.page.getByTestId('app-no-data')
   }
 
   get signedDocument() {
-    return this.page.locator('.app__signed')
+    return this.page.getByTestId('signed-document')
   }
 
   // Core app actions
@@ -70,7 +70,7 @@ export class AppTester extends PageObject {
 
   // Generic helpers
   async expectTextVisible(text: string) {
-    await expect(this.page.locator(`text=${text}`)).toBeVisible()
+    await expect(this.page.getByText(text)).toBeVisible()
   }
 
   async waitFor(selector: string) {
@@ -100,11 +100,20 @@ export class AppTester extends PageObject {
   }
 
   async takeDocumentScreenshot(filename: string) {
-    // Screenshot either the document or signed document element
-    const documentSelector = this.page.locator('.document, .app__signed').first()
-    await documentSelector.screenshot({
-      path: `e2e-results/${filename}`
-    })
+    // Screenshot either the document or signed document element using test IDs
+    const documentElement = await this.page.getByTestId('document').first().isVisible()
+      .catch(() => false)
+    
+    if (documentElement) {
+      await this.page.getByTestId('document').screenshot({
+        path: `e2e-results/${filename}`
+      })
+    } else {
+      // Fall back to signed document
+      await this.page.getByTestId('signed-document').screenshot({
+        path: `e2e-results/${filename}`
+      })
+    }
   }
 
   // Scenario helpers

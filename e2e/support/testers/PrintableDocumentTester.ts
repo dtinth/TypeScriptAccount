@@ -2,9 +2,9 @@ import { expect } from '@playwright/test'
 import { PageObject } from '../PageObject'
 
 export class PrintableDocumentTester extends PageObject {
-  // Locators
+  // Locators - Using semantic locators instead of CSS selectors
   get document() {
-    return this.page.locator('.document')
+    return this.page.getByTestId('document')
   }
 
   // Actions
@@ -14,11 +14,11 @@ export class PrintableDocumentTester extends PageObject {
 
   // Assertions
   async expectDocumentNumber(number: string) {
-    await expect(this.page.locator(`text=${number}`)).toBeVisible()
+    await expect(this.page.getByText(number)).toBeVisible()
   }
 
   async expectClientName(name: string) {
-    await expect(this.page.locator(`text=${name}`)).toBeVisible()
+    await expect(this.page.getByText(name)).toBeVisible()
   }
 
   async expectDocumentVisible() {

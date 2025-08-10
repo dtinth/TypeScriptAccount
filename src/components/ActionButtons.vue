@@ -1,18 +1,33 @@
 <template>
-  <div class="action-buttons action-buttons--print-hidden">
+  <div class="action-buttons action-buttons--print-hidden" data-testid="action-buttons">
     <div v-if="isGristMocked" class="action-buttons__scenario">
-      <select id="scenario-select" v-model="selectedScenarioSlug" class="action-buttons__select"
+      <select 
+        id="scenario-select" 
+        v-model="selectedScenarioSlug" 
+        class="action-buttons__select"
+        data-testid="scenario-selector"
+        aria-label="เลือกตัวอย่างเอกสาร"
         @change="onScenarioChange">
         <option value="">— เลือกตัวอย่าง —</option>
         <option v-for="s in scenarios" :key="s.slug" :value="s.slug">{{ s.title }}</option>
       </select>
     </div>
 
-    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint"
+    <button 
+      type="button" 
+      class="action-buttons__button action-buttons__button--primary" 
+      data-testid="print-button"
+      aria-label="พิมพ์เอกสาร"
+      @click="handlePrint"
       :disabled="props.disablePrint">
       🖨️ พิมพ์เอกสาร
     </button>
-    <button type="button" class="action-buttons__button action-buttons__button--secondary" @click="handleCopyJson">
+    <button 
+      type="button" 
+      class="action-buttons__button action-buttons__button--secondary"
+      data-testid="copy-json-button" 
+      aria-label="คัดลอกข้อมูล JSON"
+      @click="handleCopyJson">
       📋 คัดลอก JSON
     </button>
   </div>
