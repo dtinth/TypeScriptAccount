@@ -73,11 +73,16 @@ export function useAppState() {
     }
   }
 
+  // Module-scoped flag to prevent duplicate initialization
+  let gristInitialized = false
 
-  // Initialize Grist integration
+  // Initialize Grist integration (idempotent)
   const initializeGrist = async () => {
+    if (gristInitialized) return
+    gristInitialized = true
+
     grist.ready({
-      onEditOptions: scrollToSettings
+      onEditOptions: scrollToSettings,
     })
 
     // Handle record data
@@ -112,7 +117,6 @@ export function useAppState() {
     // Load initial custom CSS
     await loadCustomCss()
   }
-
 
   // Watch for record changes to update document title
   watch(record, (r) => {
