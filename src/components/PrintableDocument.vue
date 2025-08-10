@@ -1,6 +1,14 @@
 <template>
-  <article class="document" :data-document-type="documentType?.toLowerCase()" :data-document-id="record?.id"
-    :data-provider-name="providerName" :data-customer-name="customerName" :data-payment-method-name="paymentMethodName">
+  <article 
+    class="document" 
+    data-testid="document"
+    role="document"
+    :data-document-type="documentType?.toLowerCase()" 
+    :data-document-id="record?.id"
+    :data-document-number="documentNumber" 
+    :data-provider-name="providerName" 
+    :data-customer-name="customerName" 
+    :data-payment-method-name="paymentMethodName">
     <DocumentHeader v-if="record" :record="record" />
 
     <ClientInfo v-if="record" :record="record" />
@@ -48,6 +56,10 @@ const providerName = computed(() => {
 
 const customerName = computed(() => {
   return props.record?.Record.Client.Name || null
+})
+
+const documentNumber = computed(() => {
+  return props.record?.Record.Number || null
 })
 
 const paymentMethodName = computed(() => {

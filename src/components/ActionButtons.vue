@@ -1,27 +1,43 @@
 <template>
-  <div class="action-buttons action-buttons--print-hidden">
-    <div v-if="standaloneMode" class="action-buttons__scenario">
-      <select id="scenario-select" v-model="selectedScenarioSlug" class="action-buttons__select"
+  <div class="action-buttons action-buttons--print-hidden" data-testid="action-buttons">
+    <div v-if="isGristMocked" class="action-buttons__scenario">
+      <select 
+        id="scenario-select" 
+        v-model="selectedScenarioSlug" 
+        class="action-buttons__select"
+        data-testid="scenario-selector"
+        aria-label="เลือกตัวอย่างเอกสาร"
         @change="onScenarioChange">
         <option value="">— เลือกตัวอย่าง —</option>
         <option v-for="s in scenarios" :key="s.slug" :value="s.slug">{{ s.title }}</option>
       </select>
     </div>
 
-    <button type="button" class="action-buttons__button action-buttons__button--primary" @click="handlePrint"
+    <button 
+      type="button" 
+      class="action-buttons__button action-buttons__button--primary" 
+      data-testid="print-button"
+      aria-label="พิมพ์เอกสาร"
+      @click="handlePrint"
       :disabled="props.disablePrint">
       🖨️ พิมพ์เอกสาร
     </button>
-    <button type="button" class="action-buttons__button action-buttons__button--secondary" @click="handleCopyJson">
+    <button 
+      type="button" 
+      class="action-buttons__button action-buttons__button--secondary"
+      data-testid="copy-json-button" 
+      aria-label="คัดลอกข้อมูล JSON"
+      @click="handleCopyJson">
       📋 คัดลอก JSON
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { scenarios } from '../utils/scenarios'
+import { isGristMocked } from '../utils/grist'
 
 interface Props {
   record: GristRecord | null
@@ -30,16 +46,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const emit = defineEmits<{ (e: 'load-scenario', data: GristRecord): void }>()
 
 const selectedScenarioSlug = ref('')
-
-const standaloneMode = computed(() => {
-  const url = new URLSearchParams(window.location.search)
-  const forcedStandalone = url.has('standalone')
-  const notEmbedded = window.parent === window.self
-  return forcedStandalone || notEmbedded
-})
 
 function handlePrint() {
   if (props.disablePrint) return
@@ -62,7 +70,12 @@ function handleCopyJson() {
 
 function onScenarioChange() {
   const s = scenarios.find((x) => x.slug === selectedScenarioSlug.value)
-  if (s) emit('load-scenario', s.data)
+  if (s) {
+    // Dispatch DOM event to communicate with mock Grist API
+    document.dispatchEvent(new CustomEvent('mockgristrecord', {
+      detail: s.data
+    }))
+  }
 }
 </script>
 
