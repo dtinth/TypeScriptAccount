@@ -3,6 +3,7 @@
   "include": ["./**/*"],
   "compilerOptions": {
     "module": "es2022",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "noEmit": true
   }
 }
