@@ -56,7 +56,7 @@ class MockGristAPI implements GristAPI {
       }
     })
 
-    document.addEventListener('mockgristeditorptions', () => {
+    document.addEventListener('mockgristeditoptions', () => {
       if (this.onEditOptionsCallback) {
         this.onEditOptionsCallback()
       }
