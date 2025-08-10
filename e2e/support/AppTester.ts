@@ -123,7 +123,7 @@ export class AppTester extends PageObject {
   }
 
   // Mock data helpers
-  async dispatchMockRecord(data: any) {
+  async dispatchMockRecord(data: unknown) {
     await this.page.evaluate((recordData) => {
       document.dispatchEvent(new CustomEvent('mockgristrecord', {
         detail: recordData
@@ -131,8 +131,11 @@ export class AppTester extends PageObject {
     }, data)
     
     // Wait for the document to fully load with the correct data
-    if (data?.Record?.Number) {
-      await this.printableDocument.waitForDocumentNumber(data.Record.Number)
+    if (data && typeof data === 'object' && 'Record' in data) {
+      const record = (data as { Record?: { Number?: string } }).Record
+      if (record?.Number) {
+        await this.printableDocument.waitForDocumentNumber(record.Number)
+      }
     }
   }
 
