@@ -23,7 +23,6 @@ const {
   showSettings,
   settingsRef,
   isCssChanged,
-  onLoadScenario,
   saveCustomCss,
   initializeGrist
 } = useAppState()
@@ -43,8 +42,7 @@ onMounted(async () => {
     </div>
 
     <div v-else-if="record" class="app__content">
-      <ActionButtons :record="record" :raw-grist-data="rawGristData" :disablePrint="!!record.Record.Signed_Document_URL"
-        @load-scenario="onLoadScenario" />
+      <ActionButtons :record="record" :raw-grist-data="rawGristData" :disablePrint="!!record.Record.Signed_Document_URL" />
       <div class="app__main-content">
         <template v-if="record.Record.Signed_Document_URL">
           <div class="app__signed">

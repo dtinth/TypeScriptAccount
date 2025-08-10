@@ -1,6 +1,6 @@
 <template>
   <div class="action-buttons action-buttons--print-hidden">
-    <div v-if="standaloneMode" class="action-buttons__scenario">
+    <div v-if="isGristMocked" class="action-buttons__scenario">
       <select id="scenario-select" v-model="selectedScenarioSlug" class="action-buttons__select"
         @change="onScenarioChange">
         <option value="">— เลือกตัวอย่าง —</option>
@@ -19,9 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { scenarios } from '../utils/scenarios'
+import { isGristMocked } from '../utils/grist'
 
 interface Props {
   record: GristRecord | null
@@ -30,16 +31,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const emit = defineEmits<{ (e: 'load-scenario', data: GristRecord): void }>()
 
 const selectedScenarioSlug = ref('')
-
-const standaloneMode = computed(() => {
-  const url = new URLSearchParams(window.location.search)
-  const forcedStandalone = url.has('standalone')
-  const notEmbedded = window.parent === window.self
-  return forcedStandalone || notEmbedded
-})
 
 function handlePrint() {
   if (props.disablePrint) return
@@ -62,7 +55,12 @@ function handleCopyJson() {
 
 function onScenarioChange() {
   const s = scenarios.find((x) => x.slug === selectedScenarioSlug.value)
-  if (s) emit('load-scenario', s.data)
+  if (s) {
+    // Dispatch DOM event to communicate with mock Grist API
+    document.dispatchEvent(new CustomEvent('mockgristrecord', {
+      detail: s.data
+    }))
+  }
 }
 </script>
 
