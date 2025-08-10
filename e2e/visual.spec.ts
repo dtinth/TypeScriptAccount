@@ -1,45 +1,36 @@
 import { test, expect } from '@playwright/test'
+import { App } from './support/App'
 
 test.describe('Visual Testing - Document Layouts', () => {
   test('generates screenshots for all scenarios', async ({ page }) => {
+    const app = new App(page)
+    const widget = app.gristWidget
+    
     // Import scenarios dynamically to get the latest data
     const scenarios = await import('../src/utils/scenarios').then(m => m.scenarios)
     
     for (const scenario of scenarios) {
       await test.step(`Screenshot: ${scenario.title}`, async () => {
-        await page.goto('/')
-        
-        // Wait for initial load
-        await expect(page.locator('.app')).toBeVisible()
+        await widget.goto()
+        await widget.waitForAppLoad()
         
         // Dispatch the scenario data
-        await page.evaluate((data) => {
-          document.dispatchEvent(new CustomEvent('mockgristrecord', {
-            detail: data
-          }))
-        }, scenario.data)
+        await widget.dispatchMockRecord(scenario.data)
+        await widget.waitForContent()
         
-        // Wait for content to render
-        await expect(page.locator('.app__content')).toBeVisible()
-        
-        // Hide settings and action buttons for clean screenshot
-        await page.addStyleTag({
-          content: `
-            .action-buttons { display: none !important; }
-            .app__settings { display: none !important; }
-          `
-        })
+        // Hide UI elements for clean screenshot
+        await widget.hideUIElementsForScreenshot()
         
         // Take screenshot with scenario slug as filename
-        await page.screenshot({
-          path: `e2e-results/${scenario.slug}.png`,
-          fullPage: true
-        })
+        await widget.takeScreenshot(`${scenario.slug}.png`)
       })
     }
   })
 
   test('responsive design screenshots', async ({ page }) => {
+    const app = new App(page)
+    const widget = app.gristWidget
+    
     const viewports = [
       { name: 'mobile', width: 375, height: 667 },
       { name: 'tablet', width: 768, height: 1024 },
@@ -52,68 +43,43 @@ test.describe('Visual Testing - Document Layouts', () => {
     
     for (const viewport of viewports) {
       await test.step(`Responsive ${viewport.name} - ${testScenario.title}`, async () => {
-        await page.setViewportSize({ width: viewport.width, height: viewport.height })
-        await page.goto('/')
+        await widget.setViewport(viewport.width, viewport.height)
+        await widget.goto()
+        await widget.waitForAppLoad()
         
-        await expect(page.locator('.app')).toBeVisible()
-        
-        await page.evaluate((data) => {
-          document.dispatchEvent(new CustomEvent('mockgristrecord', {
-            detail: data
-          }))
-        }, testScenario.data)
-        
-        await expect(page.locator('.app__content')).toBeVisible()
+        await widget.dispatchMockRecord(testScenario.data)
+        await widget.waitForContent()
         
         // Hide action elements for clean screenshot
-        await page.addStyleTag({
-          content: `
-            .action-buttons { display: none !important; }
-            .app__settings { display: none !important; }
-          `
-        })
+        await widget.hideUIElementsForScreenshot()
         
-        await page.screenshot({
-          path: `e2e-results/${testScenario.slug}-${viewport.name}.png`,
-          fullPage: true
-        })
+        await widget.takeScreenshot(`${testScenario.slug}-${viewport.name}.png`)
       })
     }
   })
 
   test('special states screenshots', async ({ page }) => {
+    const app = new App(page)
+    const widget = app.gristWidget
+    
     await test.step('Loading state', async () => {
-      await page.goto('/')
-      
-      // Capture loading state immediately
-      await expect(page.locator('.app__loading')).toBeVisible()
-      await page.screenshot({
-        path: 'e2e-results/loading-state.png',
-        fullPage: true
-      })
+      await widget.goto()
+      await widget.waitForLoading()
+      await widget.takeScreenshot('loading-state.png')
     })
 
     await test.step('Error state', async () => {
-      await page.goto('/')
-      await expect(page.locator('.app')).toBeVisible()
+      await widget.goto()
+      await widget.waitForAppLoad()
       
-      // Dispatch invalid data to trigger error
-      await page.evaluate(() => {
-        document.dispatchEvent(new CustomEvent('mockgristrecord', {
-          detail: { invalid: 'data' }
-        }))
-      })
-      
-      await expect(page.locator('.app__error')).toBeVisible()
-      await page.screenshot({
-        path: 'e2e-results/error-state.png',
-        fullPage: true
-      })
+      await widget.dispatchInvalidData()
+      await expect(widget.error).toBeVisible()
+      await widget.takeScreenshot('error-state.png')
     })
 
     await test.step('No data state', async () => {
-      await page.goto('/')
-      await expect(page.locator('.app')).toBeVisible()
+      await widget.goto()
+      await widget.waitForAppLoad()
       
       // Dispatch null to trigger no data state
       await page.evaluate(() => {
@@ -123,54 +89,39 @@ test.describe('Visual Testing - Document Layouts', () => {
       })
       
       // Wait a moment for the state to process
-      await page.locator('.app').waitFor()
-      
-      await page.screenshot({
-        path: 'e2e-results/no-data-state.png',
-        fullPage: true
-      })
+      await widget.app.waitFor()
+      await widget.takeScreenshot('no-data-state.png')
     })
 
     await test.step('Settings panel open', async () => {
-      await page.goto('/')
-      await expect(page.locator('.app__content')).toBeVisible()
+      await widget.goto()
+      await widget.waitForContent()
       
-      // Open settings
-      await page.click('.app__settings-toggle')
-      await expect(page.locator('.app__settings-content')).toBeVisible()
-      
-      // Add some sample CSS to show the interface
-      await page.fill('#custom-css', `.document {
+      // Open settings and add sample CSS
+      await widget.openSettings()
+      await widget.setCustomCSS(`.document {
   --font-family: Comic Sans MS, Itim, sans-serif;
   --primary-color: #ff6b6b;
 }`)
       
-      await page.screenshot({
-        path: 'e2e-results/settings-panel.png',
-        fullPage: true
-      })
+      await widget.takeScreenshot('settings-panel.png')
     })
   })
 
   test('signed document state', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.locator('.app')).toBeVisible()
+    const app = new App(page)
+    const widget = app.gristWidget
+    
+    await widget.goto()
+    await widget.waitForAppLoad()
     
     // Load signed document scenario
     const scenarios = await import('../src/utils/scenarios').then(m => m.scenarios)
     const signedScenario = scenarios.find(s => s.slug === 'signed-demo')!
     
-    await page.evaluate((data) => {
-      document.dispatchEvent(new CustomEvent('mockgristrecord', {
-        detail: data
-      }))
-    }, signedScenario.data)
+    await widget.dispatchMockRecord(signedScenario.data)
+    await expect(widget.signedDocument).toBeVisible()
     
-    await expect(page.locator('.app__signed')).toBeVisible()
-    
-    await page.screenshot({
-      path: 'e2e-results/signed-document.png',
-      fullPage: true
-    })
+    await widget.takeScreenshot('signed-document.png')
   })
 })
