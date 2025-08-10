@@ -25,6 +25,7 @@ export class SettingsTester extends PageObject {
 
   // Actions
   async open() {
+    if (await this.content.isVisible()) return
     await this.toggle.click()
     await expect(this.content).toBeVisible()
   }
