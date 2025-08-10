@@ -1,0 +1,41 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    groups:
+      vue-ecosystem:
+        patterns:
+          - "vue*"
+          - "@vue*"
+          - "vite*"
+          - "@vitejs*"
+        update-types:
+          - "minor"
+          - "patch"
+      testing:
+        patterns:
+          - "*playwright*"
+          - "*vitest*"
+          - "@playwright*"
+        update-types:
+          - "minor"
+          - "patch"
+      fonts:
+        patterns:
+          - "@fontsource*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
