@@ -25,15 +25,12 @@ export class ActionButtonsTester extends PageObject {
 
   // Actions
   async selectScenario(slug: string) {
-    // Wait for the selector to be visible and enabled
-    await expect(this.scenarioSelector).toBeVisible()
-    await expect(this.scenarioSelector).toBeEnabled()
-    
+    const doc = this.page.locator('[data-document-number]').first()
+    const docNumber = String(await doc.getAttribute('data-document-number'))
     await this.scenarioSelector.selectOption(slug)
-    
-    // Wait for the content to update after scenario selection
-    // Different scenarios may show different states (document vs signed)
-    await this.page.waitForTimeout(500) // Small delay to let the scenario change
+
+    // Expect the document number to change
+    await expect(doc).not.toHaveAttribute('data-document-number', docNumber)
   }
 
   async clickPrint() {
@@ -51,16 +48,14 @@ export class ActionButtonsTester extends PageObject {
         value: {
           writeText: async (text: string) => {
             ;(window as { clipboardText?: string }).clipboardText = text
-          }
-        }
+          },
+        },
       })
     })
   }
 
   async getClipboardText() {
-    return await this.page.evaluate(() =>
-      (window as { clipboardText?: string }).clipboardText
-    )
+    return await this.page.evaluate(() => (window as { clipboardText?: string }).clipboardText)
   }
 
   // Assertions
