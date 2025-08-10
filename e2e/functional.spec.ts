@@ -1,22 +1,20 @@
 import { test, expect } from '@playwright/test'
-import { App } from './support/App'
+import { AppTester } from './support/AppTester'
 
 test.describe('Grist Widget Functionality', () => {
   test('displays scenario selector in mock mode', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForAppLoad()
-    await widget.expectScenarioSelectorVisible()
+    await app.goto()
+    await app.waitForAppLoad()
+    await app.actionButtons.expectScenarioSelectorVisible()
   })
 
   test('loads data via DOM event dispatch', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForLoading()
+    await app.goto()
+    await app.waitForAppLoad()
     
     // Dispatch a mock record event
     const sampleData = {
@@ -66,91 +64,86 @@ test.describe('Grist Widget Functionality', () => {
       },
     }
     
-    await widget.dispatchMockRecord(sampleData)
+    await app.dispatchMockRecord(sampleData)
     
     // Should show document content
-    await widget.waitForContent()
-    await widget.expectActionButtonsVisible()
+    await app.waitForContent()
+    await app.actionButtons.expectVisible()
     
     // Should display document data
-    await widget.expectDocumentNumber('TEST-001')
-    await widget.expectClientName('Test Company Ltd')
+    await app.printableDocument.expectDocumentNumber('TEST-001')
+    await app.printableDocument.expectClientName('Test Company Ltd')
   })
 
   test('scenario selector changes data via DOM events', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForContent()
+    await app.goto()
+    await app.waitForContent()
     
     // Change scenario using dropdown
-    await widget.selectScenario('receipt-vat-k8s-bug-hunt')
+    await app.actionButtons.selectScenario('receipt-vat-k8s-bug-hunt')
     
     // Should show updated document data
-    await widget.expectDocumentNumber('RCPT-2025-0001')
-    await widget.expectTextVisible('บริการไล่บั๊กระบบ Kubernetes')
+    await app.printableDocument.expectDocumentNumber('RCPT-2025-0001')
+    await app.expectTextVisible('บริการไล่บั๊กระบบ Kubernetes')
   })
 
   test('custom CSS settings work with sessionStorage', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForContent()
+    await app.goto()
+    await app.waitForContent()
     
     // Open settings and add custom CSS
-    await widget.openSettings()
+    await app.settings.open()
     const customCSS = '.document { background-color: red; }'
-    await widget.setCustomCSS(customCSS)
-    await widget.applyCustomCSS()
+    await app.settings.setCustomCSS(customCSS)
+    await app.settings.apply()
     
     // Check that CSS was saved to sessionStorage
-    const savedCSS = await widget.getSessionStorageItem('grist_option_customCss')
+    const savedCSS = await app.getSessionStorageItem('grist_option_customCss')
     expect(JSON.parse(savedCSS!)).toBe(customCSS)
     
     // Reload page and check if CSS persists
-    await widget.reload()
-    await widget.waitForContent()
-    await widget.openSettings()
+    await app.reload()
+    await app.waitForContent()
+    await app.settings.open()
     
     // CSS should be loaded from sessionStorage
-    await widget.expectCustomCSSValue(customCSS)
+    await app.settings.expectCustomCSSValue(customCSS)
   })
 
   test('handles invalid record data gracefully', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.dispatchInvalidData()
-    await widget.expectErrorState()
+    await app.goto()
+    await app.dispatchInvalidData()
+    await app.expectErrorState()
   })
 
   test('print button is disabled when document is signed', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.selectScenario('signed-demo')
+    await app.goto()
+    await app.actionButtons.selectScenario('signed-demo')
     
-    await widget.expectSignedDocumentState()
-    await widget.expectPrintButtonDisabled()
+    await app.expectSignedDocumentState()
+    await app.actionButtons.expectPrintButtonDisabled()
   })
 
   test('copy JSON functionality works', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForContent()
+    await app.goto()
+    await app.waitForContent()
     
     // Mock clipboard API and click copy button
-    await widget.mockClipboardAPI()
-    await widget.copyJsonButton.click()
+    await app.actionButtons.mockClipboardAPI()
+    await app.actionButtons.clickCopyJson()
     
     // Check that JSON was copied
-    const clipboardText = await widget.getClipboardText()
+    const clipboardText = await app.actionButtons.getClipboardText()
     expect(JSON.parse(clipboardText!)).toMatchObject({
       id: expect.any(Number),
       Record: expect.any(Object)

@@ -1,35 +1,32 @@
 import { test, expect } from '@playwright/test'
-import { App } from './support/App'
+import { AppTester } from './support/AppTester'
 
 test.describe('Visual Testing - Document Layouts', () => {
   test('generates screenshots for all scenarios', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    // Import scenarios dynamically to get the latest data
-    const scenarios = await import('../src/utils/scenarios').then(m => m.scenarios)
+    await app.goto()
+    await app.waitForContent()
+    
+    // Ensure scenario selector is visible before proceeding
+    await app.actionButtons.expectScenarioSelectorVisible()
+    
+    // Get all scenarios from the select element
+    const scenarios = await app.getAllScenarios()
     
     for (const scenario of scenarios) {
       await test.step(`Screenshot: ${scenario.title}`, async () => {
-        await widget.goto()
-        await widget.waitForAppLoad()
+        // Select the scenario
+        await app.actionButtons.selectScenario(scenario.slug)
         
-        // Dispatch the scenario data
-        await widget.dispatchMockRecord(scenario.data)
-        await widget.waitForContent()
-        
-        // Hide UI elements for clean screenshot
-        await widget.hideUIElementsForScreenshot()
-        
-        // Take screenshot with scenario slug as filename
-        await widget.takeScreenshot(`${scenario.slug}.png`)
+        // Take screenshot of just the document element
+        await app.takeDocumentScreenshot(`${scenario.slug}.png`)
       })
     }
   })
 
   test('responsive design screenshots', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
     const viewports = [
       { name: 'mobile', width: 375, height: 667 },
@@ -38,48 +35,37 @@ test.describe('Visual Testing - Document Layouts', () => {
     ]
     
     // Use first scenario for responsive testing
-    const scenarios = await import('../src/utils/scenarios').then(m => m.scenarios)
-    const testScenario = scenarios[0] // K8s bug hunt scenario
+    const testScenarioSlug = 'receipt-vat-k8s-bug-hunt'
     
     for (const viewport of viewports) {
-      await test.step(`Responsive ${viewport.name} - ${testScenario.title}`, async () => {
-        await widget.setViewport(viewport.width, viewport.height)
-        await widget.goto()
-        await widget.waitForAppLoad()
+      await test.step(`Responsive ${viewport.name} - K8s Bug Hunt`, async () => {
+        await app.setViewport(viewport.width, viewport.height)
+        await app.goto()
+        await app.waitForContent()
         
-        await widget.dispatchMockRecord(testScenario.data)
-        await widget.waitForContent()
+        await app.actionButtons.selectScenario(testScenarioSlug)
         
-        // Hide action elements for clean screenshot
-        await widget.hideUIElementsForScreenshot()
-        
-        await widget.takeScreenshot(`${testScenario.slug}-${viewport.name}.png`)
+        // Take screenshot of just the document element
+        await app.takeDocumentScreenshot(`${testScenarioSlug}-${viewport.name}.png`)
       })
     }
   })
 
   test('special states screenshots', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await test.step('Loading state', async () => {
-      await widget.goto()
-      await widget.waitForLoading()
-      await widget.takeScreenshot('loading-state.png')
-    })
-
     await test.step('Error state', async () => {
-      await widget.goto()
-      await widget.waitForAppLoad()
+      await app.goto()
+      await app.waitForAppLoad()
       
-      await widget.dispatchInvalidData()
-      await expect(widget.error).toBeVisible()
-      await widget.takeScreenshot('error-state.png')
+      await app.dispatchInvalidData()
+      await expect(app.error).toBeVisible()
+      await app.takeScreenshot('error-state.png')
     })
 
     await test.step('No data state', async () => {
-      await widget.goto()
-      await widget.waitForAppLoad()
+      await app.goto()
+      await app.waitForAppLoad()
       
       // Dispatch null to trigger no data state
       await page.evaluate(() => {
@@ -89,39 +75,35 @@ test.describe('Visual Testing - Document Layouts', () => {
       })
       
       // Wait a moment for the state to process
-      await widget.app.waitFor()
-      await widget.takeScreenshot('no-data-state.png')
+      await app.app.waitFor()
+      await app.takeScreenshot('no-data-state.png')
     })
 
     await test.step('Settings panel open', async () => {
-      await widget.goto()
-      await widget.waitForContent()
+      await app.goto()
+      await app.waitForContent()
       
       // Open settings and add sample CSS
-      await widget.openSettings()
-      await widget.setCustomCSS(`.document {
+      await app.settings.open()
+      await app.settings.setCustomCSS(`.document {
   --font-family: Comic Sans MS, Itim, sans-serif;
   --primary-color: #ff6b6b;
 }`)
       
-      await widget.takeScreenshot('settings-panel.png')
+      await app.takeScreenshot('settings-panel.png')
     })
   })
 
   test('signed document state', async ({ page }) => {
-    const app = new App(page)
-    const widget = app.gristWidget
+    const app = new AppTester(page)
     
-    await widget.goto()
-    await widget.waitForAppLoad()
+    await app.goto()
+    await app.waitForContent()
     
     // Load signed document scenario
-    const scenarios = await import('../src/utils/scenarios').then(m => m.scenarios)
-    const signedScenario = scenarios.find(s => s.slug === 'signed-demo')!
+    await app.actionButtons.selectScenario('signed-demo')
+    await expect(app.signedDocument).toBeVisible()
     
-    await widget.dispatchMockRecord(signedScenario.data)
-    await expect(widget.signedDocument).toBeVisible()
-    
-    await widget.takeScreenshot('signed-document.png')
+    await app.takeScreenshot('signed-document.png')
   })
 })
