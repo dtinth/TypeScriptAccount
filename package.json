@@ -18,7 +18,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@fontsource/sarabun": "^5.2.6",
+    "@fontsource/sarabun": "^5.2.7",
     "@fontsource/share-tech-mono": "^5.2.6",
     "baht": "^0.7.1",
     "micromark": "^4.0.2",
