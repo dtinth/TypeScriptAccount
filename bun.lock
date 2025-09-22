@@ -4,8 +4,8 @@
     "": {
       "name": "typescriptaccount",
       "dependencies": {
-        "@fontsource/sarabun": "^5.2.7",
-        "@fontsource/share-tech-mono": "^5.2.6",
+        "@fontsource/sarabun": "^5.2.8",
+        "@fontsource/share-tech-mono": "^5.2.7",
         "baht": "^0.7.1",
         "micromark": "^4.0.2",
         "promptpay-qr": "^0.5.0",
@@ -185,9 +185,9 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.3.5", "", { "dependencies": { "@eslint/core": "^0.15.2", "levn": "^0.4.1" } }, "sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w=="],
 
-    "@fontsource/sarabun": ["@fontsource/sarabun@5.2.7", "", {}, "sha512-TnB8KizZUzhqHtX+6uLgzA9IiciGvEi4XnU8fqvwjPBlmlTf9Py2RpeoPxVc1mwho9TjFeSGgtc1Q0+p6bCwBg=="],
+    "@fontsource/sarabun": ["@fontsource/sarabun@5.2.8", "", {}, "sha512-EDf1jYaGmdeOOi3dKqy6Bjb+qPtsrJJyleoqAPq+VgStcJExwhqzYRT9HOeGE73RtfmvgJEdxk1W72EdxL6+ow=="],
 
-    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.2.6", "", {}, "sha512-TyTv6Ty051CnSWkzvuGS6+sYVgjrSyGoKptbtoZKpQhS+HqPZqXQKJzSZo/RAhaapbasi02imbq9gOqACZ93+Q=="],
+    "@fontsource/share-tech-mono": ["@fontsource/share-tech-mono@5.2.7", "", {}, "sha512-1JBJ6CU9u5av8aFEUOGOJkq60/IEVVOZDCmiU8X3i0skk0Pp69GngDwlBUHaTZa4G6pbF1UDrC+Fm7XSckW6TQ=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
