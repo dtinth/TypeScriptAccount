@@ -23,7 +23,7 @@ test('actually works with Grist', async ({ page }) => {
   await page
     .getByRole('tabpanel', { name: 'Widget' })
     .getByRole('textbox', { name: 'Enter Custom URL' })
-    .fill('http://localhost:5173')
+    .fill(process.env.CI ? 'http://localhost:4173' : 'http://localhost:5173')
   await page.keyboard.press('Enter')
   await page.getByRole('checkbox', { name: 'I confirm that I understand' }).check()
   await page.getByRole('button', { name: 'Confirm' }).click()
