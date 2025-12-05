@@ -17,7 +17,7 @@ A Vue 3 + TypeScript widget for Grist that generates professional Thai business 
 
 This widget integrates with [Grist](https://www.getgrist.com/) spreadsheet application as a custom widget.
 
-_Grist template file will be provided in the future - placeholder for now_
+**Grist template file:** [template.grist](template.grist)
 
 ## Document Types
 
