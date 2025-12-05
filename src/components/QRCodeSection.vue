@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import type { GristRecord } from '../types/document-schema'
 import { formatCurrency } from '../utils/currency'
 import { generatePromptPayQR } from '../utils/promptpay'
@@ -39,7 +39,8 @@ const showQR = computed(() => {
   return !!promptPayId.value
 })
 
-onMounted(async () => {
+const generateQRCode = async () => {
+  qrCodeUrl.value = null
   if (showQR.value && promptPayId.value) {
     try {
       qrCodeUrl.value = await generatePromptPayQR(promptPayId.value, viewModel.value.total)
@@ -47,7 +48,16 @@ onMounted(async () => {
       console.error('Failed to generate QR code:', error)
     }
   }
-})
+}
+
+onMounted(generateQRCode)
+
+watch(
+  () => [promptPayId.value, viewModel.value.total],
+  () => {
+    generateQRCode()
+  }
+)
 </script>
 
 <style>
