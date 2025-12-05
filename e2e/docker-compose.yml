@@ -1,0 +1,10 @@
+services:
+  grist:
+    image: gristlabs/grist
+    restart: unless-stopped
+    ports:
+      - '8484:8484'
+    volumes:
+      - 'grist:/persist'
+volumes:
+  grist:
