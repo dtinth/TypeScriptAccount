@@ -60,6 +60,9 @@ jobs:
       - name: Build application
         run: bun run build
 
+      - name: Start Grist
+        run: docker compose -f e2e/docker-compose.yml up -d
+
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
 

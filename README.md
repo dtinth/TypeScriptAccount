@@ -1,6 +1,8 @@
 # Receipt/Invoice/Quotation Widget for Grist
 
-A Vue 3 + TypeScript widget for Grist that generates professional Thai business documents (receipts, invoices, and quotations) with print-optimized A4 layout, PromptPay QR codes, and Thai language support.
+A Grist widget that generates professional Thai business documents (receipts, invoices, and quotations) with print-optimized A4 layout, PromptPay QR codes, and Thai language support.
+
+![Screenshot](example.png)
 
 ## Features
 
@@ -17,7 +19,7 @@ A Vue 3 + TypeScript widget for Grist that generates professional Thai business 
 
 This widget integrates with [Grist](https://www.getgrist.com/) spreadsheet application as a custom widget.
 
-_Grist template file will be provided in the future - placeholder for now_
+**Grist template file:** [template.grist](template.grist)
 
 ## Document Types
 
