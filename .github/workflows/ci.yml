@@ -94,3 +94,39 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+      - name: Publish test results to object storage
+        continue-on-error: true
+        run: |
+          # Install Rclone
+          curl https://rclone.org/install.sh | sudo bash
+
+          # Upload playwright report
+          rclone copy playwright-report/ publish:$PUBLISH_BUCKET/$PUBLISH_KEY/playwright-report/ --progress
+
+          # Print report URL for CI logs
+          REPORT_URL="$REPORT_URL_PREFIX/$PUBLISH_KEY/playwright-report/index.html"
+          echo "📊 Test report published: $REPORT_URL"
+
+          # Generate preview URL and add to step summary
+          echo "## 📊 Test Results Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run:** ${{ github.run_id }}-${{ github.run_attempt }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 **[View Test Report]($REPORT_URL)**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Fallback: Download artifacts below if S3 link is unavailable" >> $GITHUB_STEP_SUMMARY
+        env:
+          PUBLISH_BUCKET: ghartifacts
+          PUBLISH_KEY: ${{ github.repository }}/${{ github.run_id }}-${{ github.run_attempt }}
+          REPORT_URL_PREFIX: https://ghartifacts.t3.storage.dev
+          RCLONE_CONFIG_PUBLISH_TYPE: s3
+          RCLONE_CONFIG_PUBLISH_PROVIDER: Other
+          RCLONE_CONFIG_PUBLISH_REGION: auto
+          RCLONE_CONFIG_PUBLISH_ACL: public-read
+          RCLONE_CONFIG_PUBLISH_ENDPOINT: https://t3.storage.dev
+          RCLONE_CONFIG_PUBLISH_ACCESS_KEY_ID: tid_cweGkGmDMMfHSUdYAEyGsRExuXHBTmAWVCWfa_XyogdcaaTlBo
+          RCLONE_CONFIG_PUBLISH_SECRET_ACCESS_KEY: ${{ secrets.RCLONE_CONFIG_PUBLISH_SECRET_ACCESS_KEY }}
+        if: always() && hashFiles('playwright-report/**/*') != ''
