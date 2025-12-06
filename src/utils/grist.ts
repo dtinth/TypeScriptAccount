@@ -153,6 +153,7 @@ class MockGristAPI implements GristAPI {
           Tax_ID: '9999999999999',
           id: 3,
         },
+        Credit_Term: '30 วัน',
         Date: '2025-08-09T00:00:00.000Z',
         Document_Type: ['Receipt'],
         Items: [
