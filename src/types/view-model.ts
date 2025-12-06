@@ -36,5 +36,6 @@ export interface DocumentViewModel {
   total: number
   paymentInfo: PaymentInfo
   reference: ReferenceInfo
+  creditTerm: string | null
   remarks: string | null
 }

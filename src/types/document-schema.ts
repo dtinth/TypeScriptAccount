@@ -50,6 +50,7 @@ export const ReferenceSchema = z
 
 export const RecordDataSchema = z.object({
   Client: ClientSchema,
+  Credit_Term: z.string().nullish(),
   Date: z.string(), // ISO date string
   Document_Type: z.array(DocumentTypeSchema),
   Items: z.array(ItemSchema),

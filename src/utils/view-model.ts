@@ -53,6 +53,9 @@ export function getViewModel(record: GristRecord): DocumentViewModel {
     number: record.Record.Reference?.Number ?? null
   }
 
+  // Get credit term
+  const creditTerm = record.Record.Credit_Term ?? null
+
   // Get remarks
   const remarks = record.Record.Remarks ?? null
 
@@ -64,6 +67,7 @@ export function getViewModel(record: GristRecord): DocumentViewModel {
     total,
     paymentInfo,
     reference,
+    creditTerm,
     remarks
   }
 

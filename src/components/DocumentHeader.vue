@@ -30,6 +30,9 @@
         <div v-if="viewModel.reference.number" class="document-header__reference">
           อ้างอิง: {{ viewModel.reference.number }}
         </div>
+        <div v-if="viewModel.creditTerm" class="document-header__credit-term">
+          เครดิต: {{ viewModel.creditTerm }}
+        </div>
       </div>
     </div>
   </header>
